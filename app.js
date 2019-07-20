@@ -3,6 +3,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
+import session from 'express-session';
+const routes = require('./routes/userRoutes');
+const ErrorMiddleware = require('./middleware/errorMiddleware');
 
 const app = express();
 
@@ -12,18 +15,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use((err , req, res, next) => {
-  res.status(err.status || 500);
+app.use(session({
+  key: 'user',
+  secret: 'qwerty',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+      expires: 600000
+  }
+}));
 
-  if (process.env.NODE_ENV === 'development'){
-    res.render('error', {
-      message: err.message,
-      error: err });
-  }else {
-    res.render('error', {
-      message: err.message,
-      error: {} });
-    }
-  });
-    
+app.use((req, res, next) => {
+  if (req.cookies.user_sid && !req.session.user) {
+      res.clearCookie('user');        
+  }
+  next();
+});
+
+app.use(routes);
+app.use(ErrorMiddleware.catchErrors);
+
 export default app;
