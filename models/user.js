@@ -29,10 +29,11 @@ module.exports.login = async (req) => {
       throw new Error("User not found");
     else if (!validPassword(user,password)) 
       throw new Error("Wrong password");
-     else {
-       req.session.user = user.toJSON();
-       return req.session.user;}
-        
+     else
+     { 
+       req.session.user_sid = user._id;
+     }
+      
 };
 
 exports.register = async (req) =>{

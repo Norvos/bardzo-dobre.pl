@@ -1,7 +1,8 @@
 const User = require("../models/user");
 
 exports.login = async (req, res, next) => {
-  res.json(await User.login(req));
+  await User.login(req);
+  res.json({});
   console.log('LOGIN COMPLETE');
 };
 
