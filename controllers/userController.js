@@ -2,12 +2,13 @@ const User = require("../models/user");
 
 exports.login = async (req, res, next) => {
   await User.login(req);
-  res.json({});
-  console.log('LOGIN COMPLETE');
+  res.status(200).json({});
+  if (process.env.NODE_ENV === 'development') console.log('LOGIN COMPLETE');
 };
 
 exports.register = async (req, res, next) => {
-  await User.register(req); 
-  console.log('REGISTER COMPLETE');
+  await User.register(req);
+  res.status(200).json({});
+  if (process.env.NODE_ENV === 'development') console.log('REGISTER COMPLETE');
 };
 

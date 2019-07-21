@@ -4,7 +4,8 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import session from 'express-session';
-const routes = require('./routes/userRoutes');
+const UserRoutes = require('./routes/userRoutes');
+const RestaurantRoutes = require('./routes/restaurantRoutes');
 const ErrorMiddleware = require('./middleware/errorMiddleware');
 
 const app = express();
@@ -33,7 +34,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(routes);
+app.use(UserRoutes);
+app.use(RestaurantRoutes);
 app.use(ErrorMiddleware.catchErrors);
 
 export default app;

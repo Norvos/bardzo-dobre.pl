@@ -36,7 +36,7 @@ module.exports.login = async (req) => {
       
 };
 
-exports.register = async (req) =>{
+module.exports.register = async (req) =>{
 
   const user = await User.findOne({email : req.body.email});
    

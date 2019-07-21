@@ -1,13 +1,13 @@
-const express = require("express");
-const router = express.Router();
-import UserController from '../controllers/userController';
-const ErrorMiddleware = require('../middleware/errorMiddleware');
-const UserAuth = require('../middleware/userAuth');
+import { Router } from "express";
+const router = Router();
 
-router.post('/login',
+import UserController from '../controllers/userController';
+import ErrorMiddleware from '../middleware/errorMiddleware';
+
+router.post('/user/login',
 ErrorMiddleware.catchAsyncErrors(UserController.login));
 
-router.post('/register',
+router.post('/user/register',
 ErrorMiddleware.catchAsyncErrors(UserController.register));
 
 module.exports = router;
