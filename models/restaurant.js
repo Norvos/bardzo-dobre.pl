@@ -17,7 +17,7 @@ exports.create = async (req) =>{
     name : req.body.name,
     ownerID: req.session.user_sid
   });
-   
+
   if (restaurant) throw new Error("Restaurant already exists");
 
     await new Restaurant({

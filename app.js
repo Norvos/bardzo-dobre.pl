@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import session from 'express-session';
 const UserRoutes = require('./routes/userRoutes');
 const RestaurantRoutes = require('./routes/restaurantRoutes');
+const DishRoutes = require('./routes/dishRoutes');
 const ErrorMiddleware = require('./middleware/errorMiddleware');
 
 const app = express();
@@ -35,7 +36,14 @@ app.use((req, res, next) => {
 });
 
 app.use(UserRoutes);
+
+app.use((req, res, next) => {
+if(req.session.user_sid)  next();
+else res.status(401).json({message: "Unauthorized"});
+});
+
 app.use(RestaurantRoutes);
+app.use(DishRoutes);
 app.use(ErrorMiddleware.catchErrors);
 
 export default app;
