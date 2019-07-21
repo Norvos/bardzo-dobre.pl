@@ -2,19 +2,19 @@ import mongoose from 'mongoose';
 const Restaurant = require("./restaurant");
 
 var Schema = mongoose.Schema;
- 
+
 var DishSchema = new Schema({
     name: {type: String, required: true},
     cost: {type: Number, required: true},
     description: {type: String,required: true},
     restaurantID: {type: Schema.Types.ObjectId,required:true}
 });
- 
+
 var Dish = mongoose.model('Dish', DishSchema);
 
-exports.create = async (req) =>{
+export async function create(req){
 
-  const dish = await Dish.findOne({
+   const dish = await Dish.findOne({
     name : req.body.name,
     restaurantID: req.body.restaurantID
   });
@@ -23,14 +23,19 @@ exports.create = async (req) =>{
 
   const restaurant = await Restaurant.findById(req.body.restaurantID);
 
-  if(!restaurant)  throw new Error("Cannot find restaurant");
+  if(!restaurant) throw new Error("Cannot find restaurant");
 
-    await new Dish({
+  await new Dish({
       name : req.body.name,
       cost: req.body.cost,
       description: req.body.description,
       restaurantID: req.body.restaurantID
   }).save();
-};
+}
+
+export async function getAll(req){
+  if(!req.body.restaurantID) throw new Error("Cannot find restaurant's id");
+  return await Dish.find({restaurantID: req.body.restaurantID});
+}
 
 module.exports = Restaurant;

@@ -12,3 +12,7 @@ exports.register = async (req, res, next) => {
   if (process.env.NODE_ENV === 'development') console.log('REGISTER COMPLETE');
 };
 
+exports.getRestaurants = async (req, res, next) => {
+  res.status(200).json(await User.getRestaurants(req));
+};
+

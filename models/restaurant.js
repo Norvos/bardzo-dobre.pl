@@ -11,7 +11,7 @@ var RestaurantSchema = new Schema({
  
 var Restaurant = mongoose.model('Restaurant', RestaurantSchema);
 
-exports.create = async (req) =>{
+export async function create(req){
 
   const restaurant = await Restaurant.findOne({
     name : req.body.name,
@@ -20,12 +20,12 @@ exports.create = async (req) =>{
 
   if (restaurant) throw new Error("Restaurant already exists");
 
-    await new Restaurant({
+  await new Restaurant({
     name : req.body.name,
     address : req.body.address,
     description : req.body.description,
     ownerID: req.session.user_sid
   }).save();
-};
+}
 
 module.exports = Restaurant;
