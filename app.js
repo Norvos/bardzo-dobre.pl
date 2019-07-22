@@ -7,6 +7,8 @@ import mongoose from 'mongoose';
 const UserRoutes = require('./routes/userRoutes');
 const RestaurantRoutes = require('./routes/restaurantRoutes');
 const DishRoutes = require('./routes/dishRoutes');
+const OrderRoutes = require('./routes/orderRoutes');
+
 const ErrorMiddleware = require('./middleware/errorMiddleware');
 const UserAuth = require("./middleware/userAuth");
 const CookieMiddleware = require("./middleware/cookieMiddleware");
@@ -28,6 +30,7 @@ app.use(UserAuth.userLogin);
 
 app.use(RestaurantRoutes);
 app.use(DishRoutes);
+app.use(OrderRoutes);
 app.use(ErrorMiddleware.catchErrors);
 
 export default app;

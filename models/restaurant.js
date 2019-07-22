@@ -28,4 +28,8 @@ export async function create(req){
   }).save();
 }
 
+export async function search(req){
+ return await Restaurant.find({address: {$regex: req.body.address, $options: 'i'}});
+}
+
 module.exports = Restaurant;

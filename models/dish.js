@@ -3,7 +3,7 @@ const Restaurant = require("./restaurant");
 
 var Schema = mongoose.Schema;
 
-var DishSchema = new Schema({
+export var DishSchema = new Schema({
     name: {type: String, required: true},
     cost: {type: Number, required: true},
     description: {type: String,required: true},
