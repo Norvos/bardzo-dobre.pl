@@ -5,12 +5,12 @@ const Restaurant = require("./restaurant");
 var Schema = mongoose.Schema;
  
 var UserSchema = new Schema({
-    firstName: {type: String, required: true},
-    lastName: {type: String, required: true},
-    address: {type: String,required: true},
-    email: {type: String, unique: true,required: true,trim: true},
+    firstName: {type: String, required: [true,"First name is required"]},
+    lastName: {type: String, required: [true,"Last name is required"]},
+    address: {type: String,required: [true,"Address is required"]},
+    email: {type: String, unique: true,required: [true,"Email is required"]},
     role: {type: String, default: 'User'},
-    password: {type: String, required: true},
+    password: {type: String, required: [true,"Password is required"]},
     createdAt: {type: Date, default: Date.now},
 });
  

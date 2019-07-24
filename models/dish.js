@@ -4,10 +4,10 @@ const Restaurant = require("./restaurant");
 var Schema = mongoose.Schema;
 
 export var DishSchema = new Schema({
-    name: {type: String, required: true},
-    cost: {type: Number, required: true},
-    description: {type: String,required: true},
-    restaurantID: {type: Schema.Types.ObjectId,required:true}
+    name: {type: String, required: [true,"Name is required"]},
+    cost: {type: Number, required: [true,"Cost is required"]},
+    description: {type: String,required: [true,"Description is required"]},
+    restaurantID: {type: Schema.Types.ObjectId,required:[true,"Restaurant's id is required"]}
 });
 
 var Dish = mongoose.model('Dish', DishSchema);

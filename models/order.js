@@ -6,10 +6,11 @@ var Schema = mongoose.Schema;
  
 var OrderSchema = new Schema({
     userID: {type: Schema.Types.ObjectId,required:true},
-    restaurantID: {type: Schema.Types.ObjectId,required:true},
-    dishes: {type: [Dish.DishSchema],required: true},
+    restaurantID: {type: Schema.Types.ObjectId,required: [true,"Restaurant's id is reqired"]},
+    dishes: {type: [Dish.DishSchema],required: [true,"Select at least one dish"]},
     orderedAt: {type: Date, default: Date.now},
-    state: {type: String, required: true, default: "Ordered"}
+    state: {type: String, required: [true], default: "Ordered",
+    enum: ["Finalised", "In progress", "In delivery", "Ordered"]}
 });
 
 var Order =  mongoose.model('Order', OrderSchema);
