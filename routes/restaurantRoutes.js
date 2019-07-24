@@ -13,4 +13,15 @@ router.get('/restaurant/search',
 ErrorMiddleware.catchAsyncErrors(UserAuth.userAuthorize),
 ErrorMiddleware.catchAsyncErrors(RestaurantController.search)
 );
+
+router.put('/restaurant/open',
+ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
+ErrorMiddleware.catchAsyncErrors(RestaurantController.open));
+
+router.put('/restaurant/close',
+ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
+ErrorMiddleware.catchAsyncErrors(RestaurantController.close));
+
+
+
 module.exports = router;
