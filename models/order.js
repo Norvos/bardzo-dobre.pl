@@ -27,12 +27,20 @@ export async function create(req) {
   }).save();
 }
 
+
 const getOrder = async (req) => {
   const order = await Order.findById(req.body.orderID);
   if(!order) throw new Error("Order not found");
   if(order.state === "Finalised") throw new Error("You cannot edit finished order");
   return order;
 };
+
+export async function remove(req){
+  const order = await Order.findById(req.body.orderID);
+
+  if(order.state === "Ordered") await order.remove();
+  else throw Error("You cannot remove in progress orders");
+}
 
 export async function changeToInProgress(req) {
   order = getOrder(req);

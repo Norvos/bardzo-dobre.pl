@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+const Order = require("./order");
 var Schema = mongoose.Schema;
  
 var RestaurantSchema = new Schema({
@@ -10,7 +10,7 @@ var RestaurantSchema = new Schema({
     open :{type: Boolean, required:true, default:true}
 });
  
-var Restaurant = mongoose.model('Restaurant', RestaurantSchema);
+export const Restaurant = mongoose.model('Restaurant', RestaurantSchema);
 
 export async function create(req){
 
@@ -27,6 +27,24 @@ export async function create(req){
     description : req.body.description,
     ownerID: req.session.user_sid
   }).save();
+}
+
+export async function remove(req){
+
+  const restaurant = await Restaurant.findOne({
+    name : req.body.name,
+    ownerID: req.session.user_sid
+  });
+
+  const orders = await Order.find({restaurantID : restaurant._id});
+
+  orders.foreach(order => {
+    if(order.state !== "Finalised")
+    throw new Error("You cannot remove restaurant with orders in progress");
+  });
+
+  await restaurant.remove();
+  
 }
 
 export async function search(req){
