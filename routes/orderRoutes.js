@@ -25,4 +25,8 @@ router.get('/order/getMyTodaysOrders',
 ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
 ErrorMiddleware.catchAsyncErrors(OrderController.getMyTodaysOrders));
 
+router.delete('/order/remove',
+ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
+ErrorMiddleware.catchAsyncErrors(OrderController.remove));
+
 module.exports = router;

@@ -14,6 +14,12 @@ var UserSchema = new Schema({
     password: {type: String, required: [true,"Password is required"]},
     createdAt: {type: Date, default: Date.now},
 });
+
+UserSchema.methods.toJSON = function() {
+  var obj = this.toObject();
+  delete obj.password;
+  return obj;
+ };
  
 var User =  mongoose.model('User', UserSchema);
 
@@ -51,18 +57,61 @@ export async function register(req) {
 
 export async function remove(req)
 {
-  const user = await User.findOne({email : req.body.email});
-  const orders = await Order.find({userID : user._id});
+  const user = await User.findById(req.session.user_sid);
 
-  orders.foreach(order => {
+  const orders = await Order.Order.find({userID : user._id});
+
+  orders.forEach(order => {
     if(order.state !== "Finalised")
     throw new Error("You cannot remove user with orders in progress");
   });
 
-  await user.remove();
+  if(user.role === "Owner")
+  {
+    const restaurants = await Restaurant.Restaurant.find({ownerID: user._id});
+    restaurants.forEach(restaurant => 
+      {
+       if(!restaurant.permamentlyClosed)
+       throw new Error("You cannot remove user who owns restaurant");
+      });
+  }
+
+  await User.deleteOne(user);
+}
+
+export async function edit(req)
+{
+  const user = await User.findById(req.session.user_sid);
+
+  const orders = await Order.Order.find({userID : user._id});
+
+  orders.forEach(order => {
+    if(order.state !== "Finalised")
+    throw new Error("You cannot edit user with orders in progress");
+  });
+
+  user.address = req.body.address;
+  user.email = req.body.email;
+    
+  await user.save();
+}
+
+export async function changePassword(req)
+{
+  const user = await User.findById(req.session.user_sid);
+
+  if(!user) throw new Error("Cannot find the user");
+  if(!validPassword(user,req.body.password))throw new Error("Invalid credentials");
+
+  user.password = bcrypt.hashSync(req.body.newPassword,bcrypt.genSaltSync());
+
+  await user.save();
 }
 
 export async function getRestaurants(req){
-return await Restaurant.find({ownerID : req.session.user_sid});}
+return await Restaurant.find(
+  {ownerID : req.session.user_sid,
+  permamentlyClosed : false
+  });}
 
 module.exports = User;

@@ -16,4 +16,16 @@ UserAuth.userLogin,
 ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
 ErrorMiddleware.catchAsyncErrors(UserController.getRestaurants));
 
+router.delete('/user/remove',
+ErrorMiddleware.catchAsyncErrors(UserAuth.userLogin),
+ErrorMiddleware.catchAsyncErrors(UserController.remove));
+
+router.put('/user/edit',
+ErrorMiddleware.catchAsyncErrors(UserAuth.userLogin),
+ErrorMiddleware.catchAsyncErrors(UserController.edit));
+
+router.put('/user/changePassword',
+ErrorMiddleware.catchAsyncErrors(UserAuth.userLogin),
+ErrorMiddleware.catchAsyncErrors(UserController.changePassword));
+
 module.exports = router;

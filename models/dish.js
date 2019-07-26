@@ -1,16 +1,16 @@
 import mongoose from 'mongoose';
 const Restaurant = require("./restaurant");
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-export var DishSchema = new Schema({
+export const DishSchema = new Schema({
     name: {type: String, required: [true,"Name is required"]},
     cost: {type: Number, required: [true,"Cost is required"]},
     description: {type: String,required: [true,"Description is required"]},
     restaurantID: {type: Schema.Types.ObjectId,required:[true,"Restaurant's id is required"]}
 });
 
-var Dish = mongoose.model('Dish', DishSchema);
+export const Dish = mongoose.model('Dish', DishSchema);
 
 export async function create(req){
 
@@ -24,6 +24,7 @@ export async function create(req){
   const restaurant = await Restaurant.Restaurant.findById(req.body.restaurantID);
  
   if(!restaurant) throw new Error("Cannot find restaurant");
+  if(restaurant.permamentlyClosed) throw new Error("Restaurant is permamently closed");
 
   await new Dish({
       name : req.body.name,
@@ -36,15 +37,12 @@ export async function create(req){
 export async function remove(req) {
 
   const restaurant = await Restaurant.Restaurant.findById(req.body.restaurantID);
+  if(!restaurant) throw new Error("Cannot find the restaurant");
   if(restaurant.open) throw new Error("Cannot remove the dish when the restaurant is open");
   
-  const dish = await Dish.findOne(
-    { 
-      name: req.body.name,
-      restaurantID: req.body.restaurantID
-    });
+  const dish = await Dish.findById(req.body._id);
 
-  if(dish) await Dish.remove(dish);
+  if(dish) await Dish.deleteOne(dish);
   else throw new Error("Cannot find the dish");
 }
 

@@ -27,3 +27,9 @@ exports.changeToFinalised = async (req, res, next) => {
 exports.getMyTodaysOrders = async (req, res, next) => {
   res.status(200).json(await Order.getMyTodaysOrders(req));
 };
+
+exports.remove  = async (req, res, next) => {
+  await Order.remove(req);
+  res.status(200).json({});
+  if (process.env.NODE_ENV === 'development') console.log("Order has been removed");
+};

@@ -22,6 +22,10 @@ router.put('/restaurant/close',
 ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
 ErrorMiddleware.catchAsyncErrors(RestaurantController.close));
 
+router.delete('/restaurant/remove',
+ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
+ErrorMiddleware.catchAsyncErrors(RestaurantController.remove));
+
 
 
 module.exports = router;
