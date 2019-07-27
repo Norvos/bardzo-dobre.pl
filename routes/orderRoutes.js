@@ -1,32 +1,36 @@
 import { Router } from "express";
-const router = Router();
+export const router = Router();
 
-import ErrorMiddleware from '../middleware/errorMiddleware';
-import UserAuth from '../middleware/userAuth';
-import OrderController from '../controllers/orderController';
+import {catchAsyncErrors} from '../middleware/errorMiddleware';
+import {userAuthorize,ownerAuthorize} from '../middleware/userAuth';
+
+import {add,changeToFinalised,changeToInDelivery,
+  changeToInProgress,getMyTodaysOrders,remove,getAllOrders} from '../controllers/orderController';
 
 router.post('/order/add',
-ErrorMiddleware.catchAsyncErrors(UserAuth.userAuthorize),
-ErrorMiddleware.catchAsyncErrors(OrderController.add));
+catchAsyncErrors(userAuthorize),
+catchAsyncErrors(add));
 
 router.put('/order/changeToInProgress',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(OrderController.changeToInProgress));
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(changeToInProgress));
 
 router.put('/order/changeToInDelivery',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(OrderController.changeToInDelivery));
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(changeToInDelivery));
 
 router.put('/order/changeToFinalised',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(OrderController.changeToFinalised));
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(changeToFinalised));
 
 router.get('/order/getMyTodaysOrders',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(OrderController.getMyTodaysOrders));
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(getMyTodaysOrders));
 
 router.delete('/order/remove',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(OrderController.remove));
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(remove));
 
-module.exports = router;
+router.get('/order/getAllOrders',
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(getAllOrders));

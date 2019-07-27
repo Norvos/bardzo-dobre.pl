@@ -1,23 +1,21 @@
 import { Router } from "express";
-const router = Router();
+export const router = Router();
 
-import ErrorMiddleware from '../middleware/errorMiddleware';
-import UserAuth from '../middleware/userAuth';
-import DishController from '../controllers/dishController';
+import {catchAsyncErrors} from '../middleware/errorMiddleware';
+import {ownerAuthorize} from '../middleware/userAuth';
+import {add,edit,getAll,remove} from "../controllers/dishController";
 
 router.post('/dish/add',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(DishController.add));
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(add));
 
 router.get('/dish/getAll',
-ErrorMiddleware.catchAsyncErrors(DishController.getAll));
+catchAsyncErrors(getAll));
 
 router.delete('/dish/remove',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(DishController.remove));
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(remove));
 
 router.put('/dish/edit',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(DishController.edit));
-
-module.exports = router;
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(edit));

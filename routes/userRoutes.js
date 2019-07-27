@@ -1,31 +1,31 @@
 import { Router } from "express";
-const router = Router();
+export const router = Router();
 
-import UserController from '../controllers/userController';
-import ErrorMiddleware from '../middleware/errorMiddleware';
-import UserAuth from '../middleware/userAuth';
+import {changePassword,edit,getRestaurants,login,register,remove} 
+from '../controllers/userController';
+
+import {catchAsyncErrors} from '../middleware/errorMiddleware';
+import {ownerAuthorize,userLogin} from '../middleware/userAuth';
 
 router.post('/user/login',
-ErrorMiddleware.catchAsyncErrors(UserController.login));
+catchAsyncErrors(login));
 
 router.post('/user/register',
-ErrorMiddleware.catchAsyncErrors(UserController.register));
+catchAsyncErrors(register));
 
 router.get('/user/restaurants',
-UserAuth.userLogin,
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(UserController.getRestaurants));
+userLogin,
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(getRestaurants));
 
 router.delete('/user/remove',
-ErrorMiddleware.catchAsyncErrors(UserAuth.userLogin),
-ErrorMiddleware.catchAsyncErrors(UserController.remove));
+catchAsyncErrors(userLogin),
+catchAsyncErrors(remove));
 
 router.put('/user/edit',
-ErrorMiddleware.catchAsyncErrors(UserAuth.userLogin),
-ErrorMiddleware.catchAsyncErrors(UserController.edit));
+catchAsyncErrors(userLogin),
+catchAsyncErrors(edit));
 
 router.put('/user/changePassword',
-ErrorMiddleware.catchAsyncErrors(UserAuth.userLogin),
-ErrorMiddleware.catchAsyncErrors(UserController.changePassword));
-
-module.exports = router;
+catchAsyncErrors(userLogin),
+catchAsyncErrors(changePassword));

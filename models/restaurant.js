@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const Order = require("./order");
+import {Order} from "./order";
 
 var Schema = mongoose.Schema;
  
@@ -10,7 +10,7 @@ var RestaurantSchema = new Schema({
     ownerID: {type: Schema.Types.ObjectId,required:[true,"Owner's id is required"]},
     open :{type: Boolean, required:true, default:true},
     permamentlyClosed : {type: Boolean, required:true, default:false}
-});
+},{versionKey: false});
 
 RestaurantSchema.methods.toJSON = function() {
   var obj = this.toObject();
@@ -18,8 +18,6 @@ RestaurantSchema.methods.toJSON = function() {
   return obj;
  };
 
-
- 
 export const Restaurant = mongoose.model('Restaurant', RestaurantSchema);
 
 export async function create(req){
@@ -45,7 +43,7 @@ export async function remove(req){
   if(!restaurant) throw new Error("Cannot find the restaurant");
   if(restaurant.open) throw new Error("Cannot remove open restaurant");
 
-  const orders = await Order.Order.find({restaurantID : restaurant._id});
+  const orders = await Order.find({restaurantID : restaurant._id});
   orders.forEach(order => {
     if(order.state !== "Finalised")
     throw new Error("You cannot remove restaurant with orders in progress");
@@ -83,7 +81,7 @@ export async function close(req)
   if(!restaurant) throw new Error("Cannot find the restaurant");
   if(!restaurant.open) throw new Error("Restaurant is already closed");
 
-  const orders = await Order.Order.find({restaurantID : restaurant._id});
+  const orders = await Order.find({restaurantID : restaurant._id});
   
   orders.forEach(order => {
     if(order.state !== "Finalised")
@@ -93,5 +91,3 @@ export async function close(req)
   restaurant.open = "false";
   await restaurant.save();
 }
-
-module.exports = Restaurant;

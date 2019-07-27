@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-const Restaurant = require("./restaurant");
-const Order = require("./order");
+import {Restaurant} from "./restaurant";
+import {Order} from"./order";
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
  
-var UserSchema = new Schema({
+const UserSchema = new Schema({
     firstName: {type: String, required: [true,"First name is required"]},
     lastName: {type: String, required: [true,"Last name is required"]},
     address: {type: String,required: [true,"Address is required"]},
@@ -13,7 +13,7 @@ var UserSchema = new Schema({
     role: {type: String, default: 'User'},
     password: {type: String, required: [true,"Password is required"]},
     createdAt: {type: Date, default: Date.now},
-});
+},{versionKey: false});
 
 UserSchema.methods.toJSON = function() {
   var obj = this.toObject();
@@ -21,7 +21,7 @@ UserSchema.methods.toJSON = function() {
   return obj;
  };
  
-var User =  mongoose.model('User', UserSchema);
+export const User =  mongoose.model('User', UserSchema);
 
 const validPassword = (user,password) =>
 bcrypt.compareSync(password, user.password);
@@ -59,7 +59,7 @@ export async function remove(req)
 {
   const user = await User.findById(req.session.user_sid);
 
-  const orders = await Order.Order.find({userID : user._id});
+  const orders = await Order.find({userID : user._id});
 
   orders.forEach(order => {
     if(order.state !== "Finalised")
@@ -68,11 +68,11 @@ export async function remove(req)
 
   if(user.role === "Owner")
   {
-    const restaurants = await Restaurant.Restaurant.find({ownerID: user._id});
+    const restaurants = await Restaurant.find({ownerID: user._id});
     restaurants.forEach(restaurant => 
       {
        if(!restaurant.permamentlyClosed)
-       throw new Error("You cannot remove user who owns restaurant");
+       throw new Error("You cannot remove user who owns an open restaurant");
       });
   }
 
@@ -83,7 +83,7 @@ export async function edit(req)
 {
   const user = await User.findById(req.session.user_sid);
 
-  const orders = await Order.Order.find({userID : user._id});
+  const orders = await Order.find({userID : user._id});
 
   orders.forEach(order => {
     if(order.state !== "Finalised")
@@ -113,5 +113,3 @@ return await Restaurant.find(
   {ownerID : req.session.user_sid,
   permamentlyClosed : false
   });}
-
-module.exports = User;

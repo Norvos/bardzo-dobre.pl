@@ -1,18 +1,19 @@
 'use strict';
 require("dotenv").config({path : '.env'});
+
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 
-const UserRoutes = require('./routes/userRoutes');
-const RestaurantRoutes = require('./routes/restaurantRoutes');
-const DishRoutes = require('./routes/dishRoutes');
-const OrderRoutes = require('./routes/orderRoutes');
+import {router as UserRoutes} from './routes/userRoutes';
+import {router as RestaurantRoutes} from './routes/restaurantRoutes';
+import {router as DishRoutes} from './routes/dishRoutes';
+import {router as OrderRoutes} from './routes/orderRoutes';
 
-const ErrorMiddleware = require('./middleware/errorMiddleware');
-const UserAuth = require("./middleware/userAuth");
-const CookieMiddleware = require("./middleware/cookieMiddleware");
+import {catchErrors} from './middleware/errorMiddleware';
+import {userLogin} from "./middleware/userAuth";
+import {clearCookie,setSession} from "./middleware/cookieMiddleware";
 
 const app = express();
 
@@ -23,15 +24,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(CookieMiddleware.setSession);
-app.use(CookieMiddleware.check);
+app.use(setSession);
+app.use(clearCookie);
 
 app.use(UserRoutes);
-app.use(UserAuth.userLogin);
+app.use(userLogin);
 
 app.use(RestaurantRoutes);
 app.use(DishRoutes);
 app.use(OrderRoutes);
-app.use(ErrorMiddleware.catchErrors);
+app.use(catchErrors);
 
 export default app;

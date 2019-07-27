@@ -1,31 +1,29 @@
 import { Router } from "express";
-const router = Router();
+export const router = Router();
 
-import ErrorMiddleware from '../middleware/errorMiddleware';
-import UserAuth from '../middleware/userAuth';
-import RestaurantController from '../controllers/restaurantController';
+import {catchAsyncErrors} from '../middleware/errorMiddleware';
+import {ownerAuthorize,userAuthorize} from '../middleware/userAuth';
+import {add,close,open,remove,search} from '../controllers/restaurantController';
 
 router.post('/restaurant/add',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(RestaurantController.add));
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(add));
 
 router.get('/restaurant/search',
-ErrorMiddleware.catchAsyncErrors(UserAuth.userAuthorize),
-ErrorMiddleware.catchAsyncErrors(RestaurantController.search)
+catchAsyncErrors(userAuthorize),
+catchAsyncErrors(search)
 );
 
 router.put('/restaurant/open',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(RestaurantController.open));
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(open));
 
 router.put('/restaurant/close',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(RestaurantController.close));
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(close));
 
 router.delete('/restaurant/remove',
-ErrorMiddleware.catchAsyncErrors(UserAuth.ownerAuthorize),
-ErrorMiddleware.catchAsyncErrors(RestaurantController.remove));
-
-
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(remove));
 
 module.exports = router;

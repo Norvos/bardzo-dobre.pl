@@ -1,6 +1,6 @@
-const User = require('../models/user');
+import {User} from '../models/user';
 
-exports.userAuthorize = async function(req,res,next) {
+export async function userAuthorize(req,res,next) {
   if(req.session.user_sid)
   {
     const user = await User.findOne({_id : req.session.user_sid});
@@ -8,14 +8,14 @@ exports.userAuthorize = async function(req,res,next) {
     else  res.status(403).json({message: "Forbidden"});
   }
   else res.status(403).json({message: "Forbidden"});
-};
+}
 
-exports.userLogin = (req, res, next) => {
+export function userLogin (req, res, next){
   if(req.session.user_sid) next();
   else res.status(401).json({message: "Unauthorized"});
-};
+}
 
-exports.ownerAuthorize = async function(req,res,next) {
+export async function ownerAuthorize (req,res,next){
   if(req.session.user_sid)
   {
     const user = await User.findOne({_id : req.session.user_sid});
@@ -23,4 +23,4 @@ exports.ownerAuthorize = async function(req,res,next) {
     else res.status(403).json({message: "Forbidden"});
   }
   else res.status(403).json({message: "Forbidden"});
-};
+}

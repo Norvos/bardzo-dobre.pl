@@ -1,12 +1,12 @@
-exports.catchAsyncErrors = (fn) => {
+export function catchAsyncErrors(fn){
   
   return (req,res,next) => {
     fn(req,res,next).catch(err => next(err));
   };
 
-};
+}
 
-exports.catchErrors =  (err, req, res, next) => {
+export function catchErrors(err, req, res, next){
 
   res.status(err.status || 500);
   
@@ -19,5 +19,5 @@ exports.catchErrors =  (err, req, res, next) => {
       message: err.message,
       error: {} });
     }
-};
+}
 

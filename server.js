@@ -1,4 +1,4 @@
-const app = require("./app").default;
+import {default as app} from "./app";
 
 app.set('port', process.env.NODE_PORT);
 

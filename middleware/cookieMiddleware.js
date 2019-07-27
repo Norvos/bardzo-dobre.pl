@@ -1,6 +1,6 @@
 import session from 'express-session';
 
-export function check(req, res, next){
+export function clearCookie(req, res, next){
   if (req.cookies.user_sid && !req.session.user_sid) 
       res.clearCookie('user_sid');
   next();
