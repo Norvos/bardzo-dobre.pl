@@ -26,4 +26,3 @@ router.delete('/restaurant/remove',
 catchAsyncErrors(ownerAuthorize),
 catchAsyncErrors(remove));
 
-module.exports = router;

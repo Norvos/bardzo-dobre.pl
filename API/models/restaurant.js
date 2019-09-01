@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 import {Order} from "./order";
 
 var Schema = mongoose.Schema;
- 
-var RestaurantSchema = new Schema({
+
+const  RestaurantSchema = new Schema({
     name: {type: String, required: [true,"Name is required"]},
     address: {type: String,required: [true,"Address is required"]},
     description: {type: String,required: [true,"Description is required"]},

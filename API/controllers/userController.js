@@ -18,6 +18,7 @@ export async function getRestaurants(req, res, next){
 
 export async function remove(req, res, next){
   await User.remove(req);
+  res.clearCookie('user_sid');
   res.status(200).json({});
   if (process.env.NODE_ENV === 'development') console.log('User has been removed');
 }

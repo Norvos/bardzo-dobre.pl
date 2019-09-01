@@ -5,6 +5,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 import {router as UserRoutes} from './routes/userRoutes';
 import {router as RestaurantRoutes} from './routes/restaurantRoutes';
@@ -17,6 +18,17 @@ import {clearCookie,setSession} from "./middleware/cookieMiddleware";
 
 const app = express();
 
+const enableCrossDomain = function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:5000');
+  res.header('Access-Control-Allow-Methods', 'DELETE, POST, GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials',true);
+  next();
+};
+
+app.use(enableCrossDomain);
+
+
 mongoose.connect(process.env.DB_STRING, {useNewUrlParser: true});
 mongoose.set('useCreateIndex', true);
 
@@ -28,7 +40,7 @@ app.use(setSession);
 app.use(clearCookie);
 
 app.use(UserRoutes);
-app.use(userLogin);
+//app.use(userLogin);
 
 app.use(RestaurantRoutes);
 app.use(DishRoutes);

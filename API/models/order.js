@@ -95,5 +95,4 @@ export async function getAllOrders(req) {
     return result.filter(
     order => order.orderedAt >= startDate && order.orderedAt <= endDate);
   }
- 
 }

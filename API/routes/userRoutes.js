@@ -19,13 +19,13 @@ catchAsyncErrors(ownerAuthorize),
 catchAsyncErrors(getRestaurants));
 
 router.delete('/user/remove',
-catchAsyncErrors(userLogin),
+userLogin,
 catchAsyncErrors(remove));
 
 router.put('/user/edit',
-catchAsyncErrors(userLogin),
+userLogin,
 catchAsyncErrors(edit));
 
 router.put('/user/changePassword',
-catchAsyncErrors(userLogin),
+userLogin,
 catchAsyncErrors(changePassword));

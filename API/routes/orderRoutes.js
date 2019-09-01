@@ -28,7 +28,7 @@ catchAsyncErrors(ownerAuthorize),
 catchAsyncErrors(getMyTodaysOrders));
 
 router.delete('/order/remove',
-catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(userAuthorize),
 catchAsyncErrors(remove));
 
 router.get('/order/getAllOrders',

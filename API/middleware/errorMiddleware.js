@@ -9,9 +9,10 @@ export function catchAsyncErrors(fn){
 export function catchErrors(err, req, res, next){
 
   res.status(err.status || 500);
-  
+
   if (process.env.NODE_ENV === 'development'){
-    res.json({
+   console.log(err.message);
+  res.json({
       message: err.message,
       error: err });
   }else {

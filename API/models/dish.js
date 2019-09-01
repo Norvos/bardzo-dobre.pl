@@ -41,7 +41,7 @@ export async function create(req){
   }).save();
 }
 
-export async function remove(req) {
+export async function remove (req) {
 
   const restaurant = await Restaurant.findById(req.body.restaurantID);
   if(!restaurant) throw new Error("Cannot find the restaurant");
@@ -51,7 +51,6 @@ export async function remove(req) {
 
   if(dish) await dish.set('available',false).save();
   else throw new Error("Cannot find the dish");
-
 }
 
 export async function edit(req)
@@ -71,7 +70,7 @@ export async function edit(req)
 }
 
 export async function getAll(req){
-  if(!req.body.restaurantID) throw new Error("Cannot find restaurant's id");
+  if(!req.body.restaurantID) throw new Error(`Cannot find restaurant's id`);
   const restaurant = await Restaurant.findById(req.body.restaurantID);
   if(!restaurant) throw new Error("Cannot find the restaurant");
   return await Dish.find({

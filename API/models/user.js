@@ -10,7 +10,7 @@ const UserSchema = new Schema({
     lastName: {type: String, required: [true,"Last name is required"]},
     address: {type: String,required: [true,"Address is required"]},
     email: {type: String, unique: true, required: [true,"Email is required"]},
-    role: {type: String, default: 'User'},
+    role: {type: String, default: 'User',enum: ['User','Owner','Deactivated']},
     password: {type: String, required: [true,"Password is required"]},
     createdAt: {type: Date, default: Date.now},
 },{versionKey: false});
@@ -37,7 +37,11 @@ export async function login(req) {
     throw new Error("User not found");
   else if (!validPassword(user,password)) 
     throw new Error("Wrong password");
-  else req.session.user_sid = user._id;
+  else if(user.role === "Deactivated")
+    throw new Error("You account has been deactivated");
+  else {
+    req.session.user_sid = user._id;
+  }
 }
 
 export async function register(req) {
@@ -58,7 +62,6 @@ export async function register(req) {
 export async function remove(req)
 {
   const user = await User.findById(req.session.user_sid);
-
   const orders = await Order.find({userID : user._id});
 
   orders.forEach(order => {
@@ -75,8 +78,7 @@ export async function remove(req)
        throw new Error("You cannot remove user who owns an open restaurant");
       });
   }
-
-  await User.deleteOne(user);
+  await user.set("role","Deactivated").save();
 }
 
 export async function edit(req)
