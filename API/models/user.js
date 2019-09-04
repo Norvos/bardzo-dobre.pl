@@ -3,6 +3,9 @@ import bcrypt from 'bcrypt';
 import {Restaurant} from "./restaurant";
 import {Order} from"./order";
 
+const  jwt  =  require('jsonwebtoken');
+
+
 const Schema = mongoose.Schema;
  
 const UserSchema = new Schema({
@@ -40,12 +43,17 @@ export async function login(req) {
   else if(user.role === "Deactivated")
     throw new Error("You account has been deactivated");
   else {
-    req.session.user_sid = user._id;
+    const  expiresIn  =  24  *  60  *  60;
+    const  accessToken  =  jwt.sign({ id:  user.id }, process.env.SECRET_KEY, 
+    {
+        expiresIn:  expiresIn
+    });
+    return ({user,accessToken,expiresIn});
   }
 }
 
 export async function register(req) {
-
+  console.log(req.body);
   const user = await User.findOne({email : req.body.email});
    
   if (user) throw new Error("User already exists");

@@ -1,8 +1,8 @@
 import * as User from "../models/user";
 
 export async function login(req, res, next){
-  await User.login(req);
-  res.status(200).json({});
+  const result = await User.login(req);
+  res.status(200).json(result);
   if (process.env.NODE_ENV === 'development') console.log('LOGIN COMPLETE');
 }
 

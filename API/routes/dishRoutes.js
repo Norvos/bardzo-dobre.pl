@@ -2,7 +2,7 @@ import { Router } from "express";
 export const router = Router();
 
 import {catchAsyncErrors} from '../middleware/errorMiddleware';
-import {ownerAuthorize} from '../middleware/userAuth';
+import {ownerAuthorize, userAuthorize} from '../middleware/userAuth';
 import {add,edit,getAll,remove} from "../controllers/dishController";
 
 router.post('/dish/add',
