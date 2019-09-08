@@ -1,6 +1,5 @@
 import React from 'react';
 import '../styles/RestaurantThumbnail.css'
-import {Redirect} from 'react-router-dom';
 
 const RestaurantThumbnail = props => {
 
@@ -10,7 +9,7 @@ const RestaurantThumbnail = props => {
  }
   return (<>
   <div 
-  className="card border-dark mb-3 bg-secondary text-white restaurant-thumbnail"
+  className="card border-dark mb-3 bg-dark text-white restaurant-thumbnail"
    style={open ? null : closeStyle}
    onClick={() => props.click(_id) }>
     <div className="card-header">
@@ -21,7 +20,7 @@ const RestaurantThumbnail = props => {
     <p className="card-text">{address}</p>
     </div>
 </div> 
-</>);
+</>)
 }
  
 export default RestaurantThumbnail;

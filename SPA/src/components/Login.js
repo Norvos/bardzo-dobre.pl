@@ -1,63 +1,64 @@
-import React from 'react';
-import {Redirect} from 'react-router-dom';
-import {authenticationService} from '../services/authenticationService'
+import React from "react";
+import { Redirect } from "react-router-dom";
+import { authenticationService } from "../services/authenticationService";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+
+const LoginSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(2, "Hasło jest zbyt krótkie")
+    .max(50, "Hasło jest zbyt długie")
+    .required("Wpisz hasło"),
+  email: Yup.string()
+    .email("Niepoprawy adres e-mail")
+    .required("Wpisz swój adres e-mail")
+});
+
 class Login extends React.Component {
   state = {
-    email : "",
-    password : "",
     complete: false
-  }
+  };
 
-  handleChange = event => {
+  handleSumbit = (email, password) => {
+    authenticationService.login(email, password);
     this.setState({
-      [event.target.name] : event.target.value
-    })
-  }
+      complete: true
+    });
+  };
 
-  handleSumbit = event => {
-    event.preventDefault();
-    
-    // fetch('http://localhost:8080/user/login', {
-    //   method: 'post',
-    //   headers: {
-    //     'Content-Type': 'application/json'},
-    //   body: JSON.stringify({
-    //     email: this.state.email,
-    //     password: this.state.password
-    //   }),
-    //   credentials: "same-origin",
-    //   mode: 'cors',
-    //   cache: 'default'
-    //  })
-    // .then(response => {
-    //    if(response.ok) 
-    //    {
-    //     console.log(response.json().then(res => console.log(res.user)));
-    //      this.setState({
-    //        complete: true
-    //      })
-    //    }
-    //    else throw response;
-    // })
-    // .catch(err => { err.json().then(body => console.error(body.message))})
-    authenticationService.login(this.state.email,this.state.password);
-    this.setState({
-      complete : true
-    })
-  }
+  render() {
+    return (
+      <>
+        {this.state.complete ? <Redirect to="/" /> : null}
+        <Formik
+          initialValues={{
+            password: "",
+            email: ""
+          }}
+          validationSchema={LoginSchema}
+          onSubmit={values => {
+            this.handleSumbit(values.email, values.password);
+          }}
+        >
+          {({ errors, touched }) => (
+            <Form className="form-signin">
+              <h1 className="h3 mb-3 font-weight-normal">Logowanie</h1>
 
-  render() { 
-    return ( <>
-    {this.state.complete ? <Redirect to="/"/> : null}
-    <form className="form-signin">
-    <h1 className="h3 mb-3 font-weight-normal">Logowanie</h1>
+              <Field name="email" type="email" className="form-control" placeholder="Wpisz e-mail" />
+              {errors.email && touched.email ? <div className="text-danger">{errors.email}</div> : null}
 
-    <input type="email" id="inputEmail"name="email" className="form-control" placeholder="Email"  onChange={this.handleChange} value={this.state.email}/>
+              <Field name="password" type="password" className="form-control" placeholder="Wpisz hasło" />
+              {errors.password && touched.password ? (
+                <div className="text-danger">{errors.password}</div>
+              ) : null}
 
-    <input type="password" id="inputPassword" name="password" className="form-control" placeholder="Hasło" onChange={this.handleChange} value={this.state.password}/>
-    
-    <button className="btn btn-lg btn-dark btn-block" onClick={this.handleSumbit}>Zaloguj</button></form> </>);
+              <button className="btn btn-lg btn-dark btn-block" type="submit">Zaloguj</button>
+            </Form>
+          )}
+        </Formik>
+      </>
+    );
   }
 }
- 
+
 export default Login;

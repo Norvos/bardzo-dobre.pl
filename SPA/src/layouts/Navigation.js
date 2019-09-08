@@ -1,10 +1,11 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-
+import {authenticationService} from '../services/authenticationService';
+import '../styles/Navigation.css';
 const Navigation = props => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div className="navbar-brand" href="#">bardzo-dobre.pl</div>
+    <div className="navbar-brand"><NavLink to='/' className="my-nav-item">bardzo-dobre.pl<span className="sr-only">(current)</span></NavLink></div>
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
@@ -18,7 +19,7 @@ const Navigation = props => {
       <ul className="navbar-nav mr-right">
         {props.user ? 
           <li className="nav-item active my-2 my-lg-0">
-            <NavLink onClick={props.logout} className="nav-link" to="/"> Wyloguj <span className="sr-only">(current)</span></NavLink>
+            <NavLink onClick={() => authenticationService.logout()} className="nav-link" to="/"> Wyloguj <span className="sr-only">(current)</span></NavLink>
           </li>
           : 
           <>
@@ -33,7 +34,6 @@ const Navigation = props => {
         </ul>
     </div>
   </nav>
- 
  );
 }
  

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
-import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage';
+import Login from '../components/Login';
+import Register from '../components/Register';
 import RestaurantPage from '../pages/RestaurantPage';
 import MainPage from '../pages/MainPage';
 import PropsRoute from '../components/PropsRoute';
@@ -12,8 +12,8 @@ const Page  = props => {
   return (
   <Switch>
     <PropsRoute path='/' exact component={MainPage} user={props.user}/>
-    <Route path='/login' component={LoginPage} />
-    <Route path='/register' component={RegisterPage} />
+    <Route path='/login' component={Login} />
+    <Route path='/register' component={Register} />
     <Route path='/restaurant/:id' component={RestaurantPage} />
   </Switch>);
 }
