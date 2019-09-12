@@ -3,14 +3,12 @@ import "../styles/MainPage.css";
 import { handleResponse } from "../helpers/handle-response";
 import { authHeader } from "../helpers/auth-helper";
 import RestaurantThumbnail from "../components/RestaurantThumbnail";
-import { Redirect } from "react-router-dom";
 import SearchForm from "../components/SearchForm";
+
 
 class MainPage extends React.Component {
   state = {
     response: [],
-    redirect: false,
-    where: ""
   };
 
   handleSumbit = searchValue => {
@@ -32,25 +30,15 @@ class MainPage extends React.Component {
       .catch(err => console.error(err));
   };
 
-  handleRedirectClick = id => {
-    this.setState({
-      redirect: true,
-      where: id
-    });
-  };
 
   render() {
     const restaurants = this.state.response.map(restaurant => (
+      
       <RestaurantThumbnail
         restaurant={restaurant}
         key={restaurant._id}
-        click={this.handleRedirectClick}
       />
     ));
-
-    if (this.state.redirect) {
-      return <Redirect to={`/restaurant/${this.state.where}`} />;
-    }
 
     if (this.props.user) {
       return (
@@ -59,7 +47,8 @@ class MainPage extends React.Component {
             value={this.state.value}
             handleSumbit={this.handleSumbit}
           />
-          <div className="row p-3">{restaurants}</div>
+          <div className="p-3">{restaurants}</div>
+      
         </>
       );
     } else return <>Strona główna</>;

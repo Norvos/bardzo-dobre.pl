@@ -9,7 +9,7 @@ router.post('/dish/add',
 catchAsyncErrors(ownerAuthorize),
 catchAsyncErrors(add));
 
-router.get('/dish/getAll',
+router.post('/dish/getAll',
 catchAsyncErrors(getAll));
 
 router.delete('/dish/remove',

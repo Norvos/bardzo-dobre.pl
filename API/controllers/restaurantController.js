@@ -10,6 +10,10 @@ export async function search (req, res, next){
   res.status(200).json(await Restaurant.search(req));
 }
 
+export async function get (req, res, next){
+  res.status(200).json(await Restaurant.get(req));
+}
+
 export async function open(req, res, next){
   await Restaurant.open(req);
   res.status(200).json({});

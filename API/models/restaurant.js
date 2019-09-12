@@ -62,6 +62,16 @@ export async function search(req){
    );
 }
 
+export async function get(req){
+
+  const restaurant = await Restaurant.findById(req.body.restaurantID);
+
+  if(!restaurant) throw new Error("Cannot find the restaurant");
+  if(restaurant.permamentlyClosed) throw new Error("Restaurant is permamently closed");
+  
+  return restaurant;
+}
+
 export async function open(req)
 {
   const restaurant = await Restaurant.findById(req.body.restaurantID);
