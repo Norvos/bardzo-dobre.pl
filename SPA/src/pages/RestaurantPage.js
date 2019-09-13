@@ -2,11 +2,19 @@ import React from 'react';
 import { handleResponse } from "../helpers/handle-response";
 import { authHeader } from "../helpers/auth-helper";
 import ProductList from '../components/ProductsList';
+import { addToCart } from '../actions/cartActions';
+import { connect } from 'react-redux';
+
+
 
  class RestaurantPage extends React.Component {
    state = { 
      restaurant : null,
      dishes : []
+    }
+
+    handleClick = item=>{
+      this.props.addToCart(item); 
     }
 
     componentDidMount () {
@@ -38,8 +46,19 @@ import ProductList from '../components/ProductsList';
     }
 
    render() { 
-     return (<><ProductList dishes={this.state.dishes} /></>);
+     return (<>
+    
+     <ProductList dishes={this.state.dishes} click={this.handleClick}/>
+    
+     
+     </>);
    }
  }
 
-export default RestaurantPage;
+ const mapDispatchToProps = dispatch => {
+  return{
+      addToCart: (item)=>{dispatch(addToCart(item))}
+  }
+}
+
+export default connect(null,mapDispatchToProps)(RestaurantPage);

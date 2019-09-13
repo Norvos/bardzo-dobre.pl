@@ -3,18 +3,24 @@ import '../styles/ProductList.css';
 
 const ProductList = props => {
   const products = props.dishes.map(dish => (
-    <li key={dish._id} className="list-group-item list-group-item-action flex-column align-items-start product-list">
-      <div className="d-flex w-100 justify-content-between">
-      <h5 className="mb-1"> {dish.name}</h5>
-      <h6 className="text-muted"> {dish.description}</h6>
-      <h6 className=""> Cena: {dish.cost} zł</h6>
-      </div>
-    </li>
+    <tr
+     key={dish._id} 
+    className="product-list"
+    onClick={() => props.click(dish)}>
+        <td className=""> {dish.name}</td>
+        <td className=""> {dish.description}</td>
+        <td className=""> Cena: {dish.cost} zł</td>
+        <td><button className="btn btn-outline-dark">Do koszyka</button></td>
+      </tr>
   ));
   return (
-    <>
-      <ul className="list-group">{products}</ul>
-    </>
+    products.length ? 
+    <table className="table table-striped product-list mt-3">
+    <tbody  className="product-list">
+      <tr><td colSpan="4" align="left"><h4>Lista dostępnych produktów:</h4></td></tr>
+    {products}
+    </tbody>
+   </table> : <h4 className="mt-4">Brak dostępnych produktów</h4>
   );
 };
 

@@ -20,9 +20,8 @@ const SearchForm = props => {
   >
     {({ errors, touched }) => (
       <Form className="main-search-form">
-       
         <div className="form-group">
-        <Field name="value" type="value" className="form-control form-control-lg" placeholder="Wyszukaj restaurację po adresie" />
+        <Field name="value" type="value" className="form-control" placeholder="Wyszukaj restaurację po adresie" />
         {errors.value && touched.value ? <div className="text-danger my-2">{errors.value}</div> : null}
         <button className="btn btn-dark my-2" type="submit">Szukaj</button>
         </div>

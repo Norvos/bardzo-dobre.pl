@@ -9,6 +9,7 @@ import SearchForm from "../components/SearchForm";
 class MainPage extends React.Component {
   state = {
     response: [],
+    message: ""
   };
 
   handleSumbit = searchValue => {
@@ -25,9 +26,14 @@ class MainPage extends React.Component {
     fetch(`http://localhost:8080/restaurant/search`, requestOptions)
       .then(handleResponse)
       .then(response => {
-        this.setState({ response });
+
+        if(response.length === 0){
+          this.setState({ message : "Brak wyników" });
+        }else this.setState({ response, message : "" });
       })
       .catch(err => console.error(err));
+     
+     
   };
 
 
@@ -47,7 +53,7 @@ class MainPage extends React.Component {
             value={this.state.value}
             handleSumbit={this.handleSumbit}
           />
-          <div className="p-3">{restaurants}</div>
+          {this.state.message ? <h4>{this.state.message}</h4> : <div className="p-3">{restaurants}</div>}
       
         </>
       );
