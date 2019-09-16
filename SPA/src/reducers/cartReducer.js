@@ -1,9 +1,10 @@
-import {ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,ADD_SHIPPING} from '../actions/action-types/cart-actions'
+import {ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,EMPTY_THE_CART} from '../actions/action-types/cart-actions'
 
 
 const initState = {
   addedItems:[],
-  total: 0
+  total: 0,
+  restaurantID : ""
 }
 
 const cartReducer = (state = initState,action)=>{
@@ -12,9 +13,12 @@ const cartReducer = (state = initState,action)=>{
   const addedItem = action.item;
     //check if the action id exists in the addedItems
   const existed_item = state.addedItems.find(item=> action.item._id === item._id)
+
+  if(state.restaurantID !== "") if(addedItem.restaurantID !== state.restaurantID ) return {...state}
+
    if(existed_item)
    {
-     existed_item.quantity += 1 
+     existed_item.quantity += 1;
        return{
           ...state,
            total: state.total + existed_item.cost 
@@ -22,6 +26,7 @@ const cartReducer = (state = initState,action)=>{
   }
    else{
       addedItem.quantity = 1;
+      state.restaurantID =  addedItem.restaurantID;
       //calculating the total
       let newTotal = state.total + addedItem.cost 
       
@@ -76,6 +81,14 @@ if(action.type=== SUB_QUANTITY){
           total: newTotal
       }
   }
+}
+
+if(action.type === EMPTY_THE_CART){  
+    return {
+        addedItems: [],
+        total: 0,
+        restaurantID : ""
+    }
 }
 
 else return state;

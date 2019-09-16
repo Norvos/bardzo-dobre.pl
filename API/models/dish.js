@@ -8,7 +8,8 @@ export const DishSchema = new Schema({
     cost: {type: Number, required: [true,"Cost is required"]},
     description: {type: String,required: [true,"Description is required"]},
     restaurantID: {type: Schema.Types.ObjectId,required:[true,"Restaurant's id is required"]},
-    available: {type: Boolean, required: true, default: true}
+    available: {type: Boolean, required: true, default: true},
+    quantity : {type: Number, required : [true, "Quantity is required"]}
 },{versionKey: false});
 
 DishSchema.methods.toJSON = function() {

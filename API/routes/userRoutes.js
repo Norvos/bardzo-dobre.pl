@@ -1,7 +1,7 @@
 import { Router } from "express";
 export const router = Router();
 
-import {changePassword,edit,getRestaurants,login,register,remove} 
+import {changePassword,edit,getRestaurants,login,register,remove, getMyOrders} 
 from '../controllers/userController';
 
 import {catchAsyncErrors} from '../middleware/errorMiddleware';
@@ -16,6 +16,10 @@ catchAsyncErrors(register));
 router.get('/user/restaurants',
 catchAsyncErrors(ownerAuthorize),
 catchAsyncErrors(getRestaurants));
+
+router.get('/user/getMyOrders',
+isUserLogin,
+catchAsyncErrors(getMyOrders));
 
 router.delete('/user/remove',
 isUserLogin,

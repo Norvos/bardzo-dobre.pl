@@ -5,10 +5,11 @@ import '../styles/Navigation.css';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSignOutAlt, faSignInAlt,faFileSignature,faHome,faShoppingCart, faPizzaSlice, faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt, faSignInAlt,faFileSignature,faHome,faShoppingCart, faPizzaSlice, faCartPlus,faTasks } 
+from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 
-library.add(faSignOutAlt,faSignInAlt,faFileSignature,faHome,faShoppingCart,faPizzaSlice, faCartPlus);
+library.add(faSignOutAlt,faSignInAlt,faFileSignature,faHome,faShoppingCart,faPizzaSlice, faCartPlus,faTasks );
 
 const Navigation = props => {
   return (
@@ -29,6 +30,11 @@ const Navigation = props => {
       <ul className="navbar-nav mr-right">
         {props.user ? 
         <>
+         <li className="nav-item active my-2 my-lg-0">
+          <NavLink className="nav-link" to="/orders"> 
+          <FontAwesomeIcon icon="tasks"/>  Zamówienia
+          <span className="sr-only">(current)</span></NavLink>
+          </li>
          <li className="nav-item active my-2 my-lg-0">
           <NavLink className="nav-link" to="/cart"> 
           {props.items.length ? <FontAwesomeIcon icon="cart-plus"/> :<FontAwesomeIcon icon="shopping-cart"/> } Koszyk 

@@ -10,7 +10,8 @@ import { connect } from 'react-redux';
  class RestaurantPage extends React.Component {
    state = { 
      restaurant : null,
-     dishes : []
+     dishes : [],
+     message: "Trwa pobieranie listy produktów ..."
     }
 
     handleClick = item=>{
@@ -39,7 +40,8 @@ import { connect } from 'react-redux';
         fetch(`http://localhost:8080/dish/getAll`, requestOptions)
         .then(handleResponse)
         .then(response => {
-          this.setState({ dishes : response });
+          if(response.length === 0) this.setState({ message : "Brak dostępnych produktów" });
+          else this.setState({ dishes : response });
         })
         .catch(err => console.error(err));
        
@@ -48,7 +50,7 @@ import { connect } from 'react-redux';
    render() { 
      return (<>
     
-     <ProductList dishes={this.state.dishes} click={this.handleClick}/>
+     <ProductList dishes={this.state.dishes} click={this.handleClick} message={this.state.message}/>
     
      
      </>);

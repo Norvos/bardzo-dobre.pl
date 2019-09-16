@@ -15,12 +15,12 @@ const ProductList = props => {
   ));
   return (
     products.length ? 
-    <table className="table table-striped product-list mt-3">
+    <table className="table table-striped product-list mt-3 table-borderless ">
     <tbody  className="product-list">
       <tr><td colSpan="4" align="left"><h4>Lista dostępnych produktów:</h4></td></tr>
     {products}
     </tbody>
-   </table> : <h4 className="mt-4">Brak dostępnych produktów</h4>
+   </table> : <h4 className="mt-4">{props.message}</h4>
   );
 };
 

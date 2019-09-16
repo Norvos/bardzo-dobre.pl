@@ -35,3 +35,10 @@ export async function changePassword(req, res, next){
   if (process.env.NODE_ENV === 'development') console.log("User's password has been edited");
 }
 
+export async function getMyOrders(req, res, next){
+  const result = await User.getMyOrders(req);
+  res.status(200).json(result);
+  if (process.env.NODE_ENV === 'development') console.log('LOGIN COMPLETE');
+}
+
+

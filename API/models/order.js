@@ -10,7 +10,8 @@ const OrderSchema = new Schema({
     dishes: {type: [DishSchema],required: [true,"Select at least one dish"]},
     orderedAt: {type: Date, default: Date.now},
     state: {type: String, required: [true], default: "Ordered",
-    enum: ["Finalised", "In progress", "In delivery", "Ordered"]}
+    enum: ["Finalised", "In progress", "In delivery", "Ordered"]},
+    total: {type: Number, required: [true,"You did not summed up the order"]}
 },{versionKey: false});
 
 export const Order =  mongoose.model('Order', OrderSchema);
@@ -22,9 +23,10 @@ export async function create(req) {
   if(restaurant.permamentlyClosed)  throw new Error("Restaurant is permamently closed");
 
   await new Order({
-    userID: req.session.user_sid,
+    userID: req.decoded.id,
     restaurantID: req.body.restaurantID,
-    dishes: req.body.dishes
+    dishes: req.body.dishes,
+    total : req.body.total
   }).save();
 }
 

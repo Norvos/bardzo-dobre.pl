@@ -1,11 +1,11 @@
-import { ADD_TO_CART, REMOVE_ITEM, SUB_QUANTITY, ADD_QUANTITY, ADD_SHIPPING } from './action-types/cart-actions';
+import { ADD_TO_CART, REMOVE_ITEM, SUB_QUANTITY, ADD_QUANTITY, EMPTY_THE_CART } from './action-types/cart-actions';
 
   //add cart action
 export const addToCart = item =>{
   return{
       type: ADD_TO_CART,
       item }
-  }
+}
 
 
 //remove item action
@@ -28,4 +28,8 @@ export const addQuantity= item=>{
       type: ADD_QUANTITY,
       item
   }
+}
+
+export const emptyTheCart = () =>{
+  return{type: EMPTY_THE_CART}
 }

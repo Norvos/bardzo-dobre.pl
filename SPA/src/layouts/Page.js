@@ -5,7 +5,9 @@ import Register from '../components/Register';
 import RestaurantPage from '../pages/RestaurantPage';
 import MainPage from '../pages/MainPage';
 import PropsRoute from '../components/PropsRoute';
-import Cart from '../components/Cart';
+import CartPage from '../pages/CartPage';
+import OrdersPage from '../pages/OrdersPage';
+import {PrivateRoute} from '../components/PrivateRoute'
 import '../styles/Page.css';
 
 
@@ -15,8 +17,9 @@ const Page  = props => {
     <PropsRoute path='/' exact component={MainPage} user={props.user}/>
     <Route path='/login' component={Login} />
     <Route path='/register' component={Register} />
-    <Route path='/restaurant/:id' component={RestaurantPage} />
-    <Route path='/cart' component={Cart} />
+    <PrivateRoute path='/restaurant/:id' component={RestaurantPage} />
+    <PrivateRoute path='/cart' component={CartPage} />
+    <PrivateRoute path='/orders' component={OrdersPage} />
   </Switch>);
 }
  
