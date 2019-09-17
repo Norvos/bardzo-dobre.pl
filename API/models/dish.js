@@ -72,7 +72,7 @@ export async function edit(req)
   const dish = await Dish.findById(req.body._id);
 
   if (!dish) throw new Error("Cannot find the dish");
-  if (!dish.available) throw new Error("Cannot edit the unavailable dish");
+  //if (!dish.available) throw new Error("Cannot edit the unavailable dish");
 
   const restaurant = await Restaurant.findById(req.body.restaurantID);
   if(!restaurant) throw new Error("Cannot find the restaurant");

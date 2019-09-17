@@ -5,6 +5,7 @@ import { authHeader } from "../helpers/AuthHelper";
 import RestaurantThumbnail from "../components/RestaurantThumbnail";
 import SearchForm from "../components/SearchForm";
 import Welcome from '../components/Welcome';
+import OwnerWelcome from '../components/OwnerWelcome';
 import {Link} from 'react-router-dom';
 
 class MainPage extends React.Component {
@@ -48,16 +49,18 @@ class MainPage extends React.Component {
     ));
 
     if (this.props.user) {
-      return (
-        <>
-          <SearchForm
-            value={this.state.value}
-            handleSumbit={this.handleSumbit}
-          />
-          {this.state.message ? <h4>{this.state.message}</h4> :<div className="p-3">{restaurants}</div>}
-      
-        </>
-      );
+      if(this.props.user.user.role === "User")
+      {
+        return (
+          <>
+            <SearchForm
+              value={this.state.value}
+              handleSumbit={this.handleSumbit}
+            />
+            {this.state.message ? <h4>{this.state.message}</h4> :<div className="p-3">{restaurants}</div>}
+        
+          </> );
+      }  else return (<OwnerWelcome />)
     } else return <><Welcome /></>;
   }
 }

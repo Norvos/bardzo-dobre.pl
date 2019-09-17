@@ -3,11 +3,11 @@ import { handleResponse } from "../helpers/HandleResponse";
 import { authHeader } from "../helpers/AuthHelper";
 import RestaurantThumbnail from "../components/RestaurantThumbnail";
 import {Link} from 'react-router-dom';
-
+import Spinner from '../components/Spinner';
 
 class OwnerRestaurantsPage extends React.Component {
   state = {
-    response: [],
+    restaurants: [],
     message: ""
   };
   componentDidMount() {
@@ -24,27 +24,19 @@ class OwnerRestaurantsPage extends React.Component {
       .then(handleResponse)
       .then(response => {
         if (response.length === 0) {
-          this.setState({ message: "Nie possiadasz jeszcze żadnych restauracji" });
-        } else this.setState({ response, message: "" });
+          this.setState({ message: "Nie posiadasz jeszcze żadnych restauracji" });
+        } else this.setState({ restaurants : response, message: "" });
       })
       .catch(err => console.error(err));
   }
   render() {
-    const restaurants = this.state.response.map(restaurant => 
+    const restaurants = this.state.restaurants.map(restaurant => 
       <Link to={`/restaurants/${restaurant._id}`} key={restaurant._id} style={{ textDecoration: "none", color: "black" }}> <RestaurantThumbnail restaurant={restaurant} key={restaurant._id} /> </Link>);
 
     return (
-      <>
-        {this.state.response ? <div className="p-3">{restaurants}</div> : (
-          <> {this.state.message ? <h4 className="mt-4">{this.state.message}</h4> :
-          <>
-            <div className="spinner-border text-dark mt-4" role="status">
-              <span className="sr-only"></span>
-            </div>
-          <h4 className="mt-2">Trwa pobieranie listy restauracji...</h4> </>}
-          </>
-        ) }
-      </>
+        this.state.restaurants ? <div className="p-3">{restaurants}</div> : 
+            this.state.message ? <h4 className="mt-4">{this.state.message}</h4> :
+          <Spinner message="Trwa pobieranie listy restauracji..."/> 
     );
   }
 }

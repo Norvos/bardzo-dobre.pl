@@ -30,7 +30,7 @@ const OwnerProductList = props => {
         <button className="btn btn-outline-primary" onClick={() =>  alertify.alert("Nie możesz edytować dań gdy restauracja jest otwarta.")}>
           Edytuj
         </button> :<>
-      <Link to={{ pathname: `/dishEdit/${dish._id}`, state: { dish } }}>
+      <Link to={{ pathname: `/dishedit/${dish._id}`, state: { dish } }}>
         <button className="btn btn-outline-primary">
           Edytuj
         </button> 
@@ -41,7 +41,6 @@ const OwnerProductList = props => {
 
   return (
     <>
-      {" "}
       {products.length ? (
         <table className="table table-striped  table-borderless">
           <tbody className="">
@@ -54,7 +53,7 @@ const OwnerProductList = props => {
           </tbody>
         </table>
       ) : (
-        <h4 className="mt-4">{props.message}</h4>
+        <h4 className="mt-4">Brak produktów</h4>
       )}
     </>
   );

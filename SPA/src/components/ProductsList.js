@@ -32,7 +32,7 @@ const ProductList = props => {
       <tr><td colSpan="4" align="left"><h4>Lista dostępnych produktów:</h4></td></tr>
     {products}
     </tbody>
-   </table> : <h4 className="mt-4">{props.message}</h4>
+   </table> : <h4 className="mt-4">Brak produktów</h4>
   );
 };
 

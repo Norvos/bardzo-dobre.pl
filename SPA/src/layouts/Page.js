@@ -9,9 +9,10 @@ import CartPage from '../pages/CartPage';
 import OrdersPage from '../pages/OrdersPage';
 import {UserRoute, OwnerRoute} from '../components/PrivateRoute'
 import '../styles/Page.css';
-import OwnerRestaurantsPage from '../pages/OwnerRestaurantsPage'
-import RestaurantPanelPage from '../pages/RestaurantPanelPage'
-import DishEditPage from '../pages/DishEditPage';
+import OwnerRestaurantsList from '../pages/OwnerRestaurantsList'
+import RestaurantPanelPage from '../pages/OwnerRestaurantPage'
+import DishEdit from '../components/DishEdit';
+import DishCreate from '../components/DishCreate';
 
 const Page  = props => {
   return (
@@ -22,8 +23,9 @@ const Page  = props => {
     <UserRoute path='/restaurant/:id' exact component={RestaurantPage} />
     <UserRoute path='/cart' component={CartPage} />
     <UserRoute path='/orders' component={OrdersPage} />
-    <OwnerRoute path='/dishEdit/:id' exact component={DishEditPage}/>
-    <OwnerRoute path='/restaurants' exact component={OwnerRestaurantsPage}/>
+    <OwnerRoute path='/dishedit/:id' exact component={DishEdit}/>
+    <OwnerRoute path='/dishcreate' exact component={DishCreate}/>
+    <OwnerRoute path='/restaurants' exact component={OwnerRestaurantsList}/>
     <OwnerRoute path='/restaurants/:id' component={RestaurantPanelPage}/>
   </Switch>);
 }
