@@ -25,6 +25,7 @@ const Navigation = props => {
       <ul className="navbar-nav mr-right">
         {props.user ? 
         <>
+         {props.user.user.role === "User" ? <> 
          <li className="nav-item active my-2 my-lg-0">
           <NavLink className="nav-link" to="/orders"> 
           <FontAwesomeIcon icon="tasks"/>  Zamówienia
@@ -34,10 +35,15 @@ const Navigation = props => {
           <NavLink className="nav-link" to="/cart"> 
           {props.items.length ? <FontAwesomeIcon icon="cart-plus"/> :<FontAwesomeIcon icon="shopping-cart"/> } Koszyk 
           <span className="sr-only">(current)</span></NavLink>
-          </li>
+          </li></> : <> 
+         <li className="nav-item active my-2 my-lg-0">
+          <NavLink className="nav-link" to="/restaurants"> 
+          <FontAwesomeIcon icon="utensils"/> Restauracje
+          <span className="sr-only">(current)</span></NavLink>
+          </li> </>}
           <li className="nav-item active my-2 my-lg-0">
             <NavLink onClick={() => authenticationService.logout()} className="nav-link" to="/"> 
-            <FontAwesomeIcon icon="sign-out-alt"/> {` Wyloguj`} 
+            <FontAwesomeIcon icon="sign-out-alt"/> Wyloguj 
             <span className="sr-only">(current)</span></NavLink>
           </li>
           </>

@@ -5,6 +5,7 @@ import { authHeader } from "../helpers/AuthHelper";
 import RestaurantThumbnail from "../components/RestaurantThumbnail";
 import SearchForm from "../components/SearchForm";
 import Welcome from '../components/Welcome';
+import {Link} from 'react-router-dom';
 
 class MainPage extends React.Component {
   state = {
@@ -37,11 +38,13 @@ class MainPage extends React.Component {
 
   render() {
     const restaurants = this.state.response.map(restaurant => (
-      
+      <Link
+      to={`/restaurant/${restaurant._id}`}
+      style={{ textDecoration: "none", color: "black" }} >
       <RestaurantThumbnail
         restaurant={restaurant}
         key={restaurant._id}
-      />
+      /></Link>
     ));
 
     if (this.props.user) {

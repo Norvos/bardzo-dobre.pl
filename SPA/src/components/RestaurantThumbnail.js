@@ -1,15 +1,11 @@
 import React from "react";
 import "../styles/RestaurantThumbnail.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 
 
 const RestaurantThumbnail = props => {
-  const { name, address, description, open, _id } = props.restaurant;
+  const { name, address, description, open } = props.restaurant;
   return (
-    <Link
-      to={`/restaurant/${_id}`}
-      style={{ textDecoration: "none", color: "black" }} >
       <div className="card border-dark mb-4 restaurant-thumbnail">
         <div className="d-inline-flex justify-content-lg-center card-header">
           <h5 className="px-3 font-weight-bold"> {name}</h5>
@@ -26,7 +22,6 @@ const RestaurantThumbnail = props => {
         </div>
         <h6 className="card-footer">{address}</h6>
       </div>
-    </Link>
   );
 };
 

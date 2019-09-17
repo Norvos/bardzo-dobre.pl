@@ -1,7 +1,7 @@
 import React from "react";
 import '../styles/ProductList.css';
 import { connect } from "react-redux";
-import {dismissAlert} from "../actions/cartActions";
+import {dismissAlert} from "../actions/CartActions";
 import alertify from 'alertifyjs';
 
 

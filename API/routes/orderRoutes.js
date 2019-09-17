@@ -31,6 +31,6 @@ router.delete('/order/remove',
 catchAsyncErrors(userAuthorize),
 catchAsyncErrors(remove));
 
-router.get('/order/getAllOrders',
+router.post('/order/getAllOrders',
 catchAsyncErrors(ownerAuthorize),
 catchAsyncErrors(getAllOrders));

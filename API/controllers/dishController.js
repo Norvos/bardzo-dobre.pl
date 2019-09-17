@@ -15,6 +15,11 @@ export async function remove(req, res, next){
   res.status(200).json({});
 }
 
+export async function unremove(req, res, next){
+  await Dish.unremove(req);
+  res.status(200).json({});
+}
+
 export async function edit(req, res, next){
   await Dish.edit(req);
   res.status(200).json({});

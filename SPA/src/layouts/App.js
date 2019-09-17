@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 import Navigation from "./Navigation";
 import Page from "./Page";
 import { authenticationService } from '../services/authenticationService';

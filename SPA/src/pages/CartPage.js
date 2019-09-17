@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {removeItem,addQuantity,subtractQuantity,emptyTheCart} from "../actions/cartActions";
+import {removeItem,addQuantity,subtractQuantity,emptyTheCart} from "../actions/CartActions";
 import "../styles/CartList.css";
 import { handleResponse } from "../helpers/HandleResponse";
 import { authHeader } from "../helpers/AuthHelper";

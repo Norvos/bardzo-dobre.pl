@@ -9,7 +9,7 @@ const Welcome = () => {
        Jest to aplikacja przygotowana specialnie dla Ciebie. Dzięki niej będziesz mógł zamawiać wyśmienite dania z okolicznych restauracji bez wychodzenia z domu! Super, prawda? Nie czekaj i wypróbuj już dziś zupełnie za darmo.
       </h5>
       <h6 className="p-4">
-        <Link to="/login"> Zaloguj </Link> się lub <Link to="/register"> zarejestruj </Link> aby w pełni poczuć moc tego
+        <Link to="/login"style={{ textDecoration: "none", color: "black" }}> <b>Zaloguj</b> </Link> się lub <Link to="/register"   style={{ textDecoration: "none", color: "black" }}> <b>zarejestruj</b> </Link> aby w pełni poczuć moc tego
         portalu
       </h6>
     </div>

@@ -15,7 +15,6 @@ catchAsyncErrors(search)
 );
 
 router.post('/restaurant/get',
-catchAsyncErrors(userAuthorize),
 catchAsyncErrors(get)
 );
 

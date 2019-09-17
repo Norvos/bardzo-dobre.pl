@@ -14,6 +14,7 @@ router.post('/user/register',
 catchAsyncErrors(register));
 
 router.get('/user/restaurants',
+isUserLogin,
 catchAsyncErrors(ownerAuthorize),
 catchAsyncErrors(getRestaurants));
 

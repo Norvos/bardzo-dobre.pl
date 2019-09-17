@@ -74,7 +74,7 @@ export async function register(req) {
 }
 
 export async function remove(req) {
-  const user = await User.findById(req.session.user_sid);
+  const user = await User.findById(req.decoded.id);
   const orders = await Order.find({ userID: user._id });
 
   orders.forEach(order => {
@@ -93,7 +93,7 @@ export async function remove(req) {
 }
 
 export async function edit(req) {
-  const user = await User.findById(req.session.user_sid);
+  const user = await User.findById(req.decoded.id);
 
   const orders = await Order.find({ userID: user._id });
 
@@ -109,7 +109,7 @@ export async function edit(req) {
 }
 
 export async function changePassword(req) {
-  const user = await User.findById(req.session.user_sid);
+  const user = await User.findById(req.decoded.id);
 
   if (!user) throw new Error("Cannot find the user");
   if (!validPassword(user, req.body.password))
@@ -122,7 +122,7 @@ export async function changePassword(req) {
 
 export async function getRestaurants(req) {
   return await Restaurant.find({
-    ownerID: req.session.user_sid,
+    ownerID: req.decoded.id,
     permamentlyClosed: false
   });
 }

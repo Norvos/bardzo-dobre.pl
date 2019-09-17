@@ -78,8 +78,8 @@ class OrdersPage extends React.Component {
           <OrdersList orders={this.state.orders} />
         ) : (
           <>
-          <div class="spinner-border text-dark mt-4" role="status">
-            <span class="sr-only"></span>
+          <div className="spinner-border text-dark mt-4" role="status">
+            <span className="sr-only"></span>
           </div>
           <h4 className="mt-2">Trwa pobieranie zamówień...</h4>
         </>

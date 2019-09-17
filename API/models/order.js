@@ -81,7 +81,7 @@ export async function getAllOrders(req) {
   const restaurant = await Restaurant.findById(req.body.restaurantID);
   if(!restaurant) throw new Error("Cannot find restaurant");
   
-  if(restaurant.ownerID != req.session.user_sid) 
+  if(restaurant.ownerID != req.decoded.id) 
   throw new Error("You cannot get someone's orders");
 
   const result = await Order.find({restaurantID : req.body.restaurantID});

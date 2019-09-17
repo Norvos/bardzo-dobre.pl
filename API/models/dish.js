@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import {Restaurant} from "./restaurant";
-
+import {User} from './user';
 const Schema = mongoose.Schema;
 
 export const DishSchema = new Schema({
@@ -9,14 +9,14 @@ export const DishSchema = new Schema({
     description: {type: String,required: [true,"Description is required"]},
     restaurantID: {type: Schema.Types.ObjectId,required:[true,"Restaurant's id is required"]},
     available: {type: Boolean, required: true, default: true},
-    quantity : {type: Number, required : [true, "Quantity is required"]}
+    quantity : {type: Number}
 },{versionKey: false});
 
-DishSchema.methods.toJSON = function() {
-  var obj = this.toObject();
-  delete obj.available;
-  return obj;
- };
+// DishSchema.methods.toJSON = function() {
+//   var obj = this.toObject();
+//   delete obj.available;
+//   return obj;
+//  };
 
 export const Dish = mongoose.model('Dish', DishSchema);
 
@@ -54,6 +54,19 @@ export async function remove (req) {
   else throw new Error("Cannot find the dish");
 }
 
+export async function unremove (req) {
+
+  const restaurant = await Restaurant.findById(req.body.restaurantID);
+  if(!restaurant) throw new Error("Cannot find the restaurant");
+ 
+  const dish = await Dish.findById(req.body._id);
+
+  if(dish) await dish.set('available',true).save();
+  else throw new Error("Cannot find the dish");
+}
+
+
+
 export async function edit(req)
 {
   const dish = await Dish.findById(req.body._id);
@@ -64,7 +77,8 @@ export async function edit(req)
   const restaurant = await Restaurant.findById(req.body.restaurantID);
   if(!restaurant) throw new Error("Cannot find the restaurant");
   if(restaurant.open) throw new Error("Cannot edit the dish when the restaurant is open");
-
+  
+  dish.name = req.body.name;
   dish.cost = req.body.cost;
   dish.description = req.body.description;
   await dish.save();
@@ -74,8 +88,19 @@ export async function getAll(req){
   if(!req.body.restaurantID) throw new Error(`Cannot find restaurant's id`);
   const restaurant = await Restaurant.findById(req.body.restaurantID);
   if(!restaurant) throw new Error("Cannot find the restaurant");
-  return await Dish.find({
-    restaurantID: req.body.restaurantID,
-    available: true
-  });
+
+  const user = await User.findById(req.decoded.id);
+  if(user.role === "Owner")
+  {
+    return await Dish.find({
+      restaurantID: req.body.restaurantID
+    });
+  }else
+  {
+    return await Dish.find({
+      restaurantID: req.body.restaurantID,
+      available: true
+    });
+  }
+ 
 }
