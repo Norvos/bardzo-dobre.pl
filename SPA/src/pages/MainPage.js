@@ -1,10 +1,10 @@
 import React from "react";
 import "../styles/MainPage.css";
-import { handleResponse } from "../helpers/handle-response";
-import { authHeader } from "../helpers/auth-helper";
+import { handleResponse } from "../helpers/HandleResponse";
+import { authHeader } from "../helpers/AuthHelper";
 import RestaurantThumbnail from "../components/RestaurantThumbnail";
 import SearchForm from "../components/SearchForm";
-
+import Welcome from '../components/Welcome';
 
 class MainPage extends React.Component {
   state = {
@@ -33,9 +33,7 @@ class MainPage extends React.Component {
       })
       .catch(err => console.error(err));
      
-     
   };
-
 
   render() {
     const restaurants = this.state.response.map(restaurant => (
@@ -53,11 +51,11 @@ class MainPage extends React.Component {
             value={this.state.value}
             handleSumbit={this.handleSumbit}
           />
-          {this.state.message ? <h4>{this.state.message}</h4> : <div className="p-3">{restaurants}</div>}
+          {this.state.message ? <h4>{this.state.message}</h4> :<div className="p-3">{restaurants}</div>}
       
         </>
       );
-    } else return <>Strona główna</>;
+    } else return <><Welcome /></>;
   }
 }
 

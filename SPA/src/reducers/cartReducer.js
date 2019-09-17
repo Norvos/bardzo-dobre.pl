@@ -1,10 +1,10 @@
-import {ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,EMPTY_THE_CART} from '../actions/action-types/cart-actions'
-
+import {ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,EMPTY_THE_CART,DISMISS_ALERT} from '../actions/action-types/cart-actions'
 
 const initState = {
   addedItems:[],
   total: 0,
-  restaurantID : ""
+  restaurantID : "",
+  alert:  false
 }
 
 const cartReducer = (state = initState,action)=>{
@@ -14,15 +14,14 @@ const cartReducer = (state = initState,action)=>{
     //check if the action id exists in the addedItems
   const existed_item = state.addedItems.find(item=> action.item._id === item._id)
 
-  if(state.restaurantID !== "") if(addedItem.restaurantID !== state.restaurantID ) return {...state}
+  if(state.restaurantID !== "") if(addedItem.restaurantID !== state.restaurantID ) return {...state, alert :true}
 
    if(existed_item)
    {
      existed_item.quantity += 1;
        return{
           ...state,
-           total: state.total + existed_item.cost 
-            }
+           total: state.total + existed_item.cost,}
   }
    else{
       addedItem.quantity = 1;
@@ -33,7 +32,7 @@ const cartReducer = (state = initState,action)=>{
       return{
           ...state,
           addedItems: [...state.addedItems, addedItem],
-          total : newTotal
+          total : newTotal,
       }
       
   }
@@ -50,6 +49,11 @@ if(action.type === REMOVE_ITEM){
       addedItems: new_items,
       total: newTotal
   }
+}
+
+if(action.type === DISMISS_ALERT){
+  console.log('dismiss');
+  return{ ...state,alert:false}
 }
 //INSIDE CART COMPONENT
 if(action.type=== ADD_QUANTITY){

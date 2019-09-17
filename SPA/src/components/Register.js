@@ -2,6 +2,7 @@ import React from 'react';
 import {Redirect} from 'react-router-dom';
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import '../styles/Register.css';
 
 const RegisterSchema = Yup.object().shape({
   password: Yup.string()
@@ -61,21 +62,6 @@ class Register extends React.Component {
     return (
       <>
     {this.state.complete ? <Redirect to="/login"/> : null}
-    
-    {/* <form className="form-signin">
-    <h1 className="h3 mb-3 font-weight-normal">Rejestracja</h1>
-
-    <input type="text" id="inputFirstName" name="firstName" className="form-control" placeholder="Imię" onChange={this.handleChange} value={this.state.firstName}/>
-
-    <input type="text" id="inputLastName" name="lastName" className="form-control" placeholder="Nazwisko"  onChange={this.handleChange} value={this.state.lastName}/>
-
-    <input type="text" id="inputAddress" name="address"className="form-control" placeholder="Adres"  onChange={this.handleChange} value={this.state.address}/>
- 
-    <input type="email" id="inputEmail"name="email" className="form-control" placeholder="Email"  onChange={this.handleChange} value={this.state.email}/>
-
-    <input type="password" id="inputPassword" name="password" className="form-control" placeholder="Hasło" onChange={this.handleChange} value={this.state.password}/>
-    
-    <button className="btn btn-lg btn-dark btn-block" onClick={this.handleSumbit}>Zarejestruj</button></form> */}
     
     <Formik
         initialValues={{

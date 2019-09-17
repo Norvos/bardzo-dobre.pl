@@ -2,14 +2,9 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {authenticationService} from '../services/authenticationService';
 import '../styles/Navigation.css';
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSignOutAlt, faSignInAlt,faFileSignature,faHome,faShoppingCart, faPizzaSlice, faCartPlus,faTasks } 
-from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 
-library.add(faSignOutAlt,faSignInAlt,faFileSignature,faHome,faShoppingCart,faPizzaSlice, faCartPlus,faTasks );
 
 const Navigation = props => {
   return (

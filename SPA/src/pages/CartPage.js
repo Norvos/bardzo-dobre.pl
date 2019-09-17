@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {removeItem,addQuantity,subtractQuantity,emptyTheCart} from "../actions/cartActions";
 import "../styles/CartList.css";
-import { handleResponse } from "../helpers/handle-response";
-import { authHeader } from "../helpers/auth-helper";
+import { handleResponse } from "../helpers/HandleResponse";
+import { authHeader } from "../helpers/AuthHelper";
 import CartProductsList from "../components/CartProductsList";
+import alertify from 'alertifyjs';
 
 class Cart extends Component {
   handleRemove = item => {
@@ -44,6 +45,8 @@ class Cart extends Component {
         this.handleCartEmptying();
       })
       .catch(err => console.error(err));
+
+      alertify.alert("Twoje zamównie zostało złożone. Znajdziesz je w zakładce zamówniania ")
   };
 
   render() {

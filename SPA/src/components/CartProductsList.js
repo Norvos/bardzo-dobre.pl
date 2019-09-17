@@ -1,9 +1,5 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {faPlus, faMinus, faTrash} from "@fortawesome/free-solid-svg-icons";
-
-library.add(faPlus, faMinus, faTrash);
 
 const CartProductsList = props => {
 

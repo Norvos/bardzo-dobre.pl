@@ -1,12 +1,8 @@
 import React from "react";
 import "../styles/RestaurantThumbnail.css";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faDoorClosed, faDoorOpen } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-library.add(faDoorClosed, faDoorOpen);
 
 const RestaurantThumbnail = props => {
   const { name, address, description, open, _id } = props.restaurant;

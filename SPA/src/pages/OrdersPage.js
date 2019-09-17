@@ -1,7 +1,7 @@
 import React from "react";
 import OrdersList from "../components/OrdersList";
-import { handleResponse } from "../helpers/handle-response";
-import { authHeader } from "../helpers/auth-helper";
+import { handleResponse } from "../helpers/HandleResponse";
+import { authHeader } from "../helpers/AuthHelper";
 
 class OrdersPage extends React.Component {
   state = {
@@ -77,7 +77,12 @@ class OrdersPage extends React.Component {
         {this.state.complete ? (
           <OrdersList orders={this.state.orders} />
         ) : (
-          "Trwa pobieranie zamówień ..."
+          <>
+          <div class="spinner-border text-dark mt-4" role="status">
+            <span class="sr-only"></span>
+          </div>
+          <h4 className="mt-2">Trwa pobieranie zamówień...</h4>
+        </>
         )}
       </>
     );
