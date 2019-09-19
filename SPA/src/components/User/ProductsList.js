@@ -1,7 +1,7 @@
 import React from "react";
-import '../styles/ProductList.css';
+import '../../styles/ProductList.css';
 import { connect } from "react-redux";
-import {dismissAlert} from "../actions/CartActions";
+import {dismissAlert} from "../../actions/CartActions";
 import alertify from 'alertifyjs';
 
 
@@ -15,7 +15,7 @@ const ProductList = props => {
         <td className=""> {dish.name}</td>
         <td className=""> {dish.description}</td>
         <td className=""> Cena: {dish.cost} zł</td>
-        <td><button className="btn btn-outline-dark">Do koszyka</button></td>
+        <td><button className="btn btn-outline-success">Do koszyka</button></td>
       </tr>
   ));
 

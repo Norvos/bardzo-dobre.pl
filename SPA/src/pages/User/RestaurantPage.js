@@ -1,17 +1,18 @@
 import React from "react";
-import { handleResponse } from "../helpers/HandleResponse";
-import { authHeader } from "../helpers/AuthHelper";
-import ProductList from "../components/ProductsList";
-import { addToCart } from "../actions/CartActions";
+import { handleResponse } from "../../helpers/HandleResponse";
+import { authHeader } from "../../helpers/AuthHelper";
+import ProductList from "../../components/User/ProductsList";
+import { addToCart } from "../../actions/CartActions";
 import { connect } from "react-redux";
-import "../styles/RestaurantPage.css";
-import RestaurantInfo from '../components/RestaurantInfo';
-import Spinner from '../components/Spinner';
+import "../../styles/RestaurantPage.css";
+import RestaurantInfo from '../../components/RestaurantInfo';
+import Spinner from '../../components/Spinner';
 
 class RestaurantPage extends React.Component {
   state = {
     restaurant: null,
     dishes: [],
+    message : ""
   };
 
   handleClick = item => {
@@ -39,7 +40,10 @@ class RestaurantPage extends React.Component {
     fetch(`http://localhost:8080/dish/getAll`, requestOptions)
       .then(handleResponse)
       .then(response => {
-       this.setState({ dishes: response });
+        if(response.length === 0)
+        {
+          this.setState({ message: "Restauracja nie oferuje w tej chwili żadnych dań" });
+        }else this.setState({ dishes: response, message : "" });
       })
       .catch(err => console.error(err));
   }
@@ -56,13 +60,14 @@ class RestaurantPage extends React.Component {
               }
             </div>
             <div className="col-7">
-            {this.state.dishes ? (
+            {this.state.dishes.length ? (
                   <ProductList
                     dishes={this.state.dishes}
                     click={this.handleClick}
                     restaurant={this.state.restaurant}
                   />
-                ) : (
+                ) : this.state.message ? <h4 className="mb-4">{this.state.message} </h4> : 
+                (
                    <Spinner message="Trwa pobieranie listy dań ..."/>
                 )}
             </div>

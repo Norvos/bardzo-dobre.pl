@@ -1,17 +1,11 @@
 import React from "react";
-import OrdersList from "../components/OrdersList";
-import { handleResponse } from "../helpers/HandleResponse";
-import { authHeader } from "../helpers/AuthHelper";
+import OrdersList from "../../components/User/OrdersList";
+import { handleResponse } from "../../helpers/HandleResponse";
+import { authHeader } from "../../helpers/AuthHelper";
 
 class OrdersPage extends React.Component {
   state = {
-    orders: {
-      ordered: [],
-      inProgress: [],
-      inDelivery: [],
-      finalised: []
-    },
-    complete: false
+    orders: null
   };
 
   async componentDidMount() {
@@ -52,10 +46,15 @@ class OrdersPage extends React.Component {
 
       }).then(orderResponse => {
 
+        orderResponse = orderResponse.sort(function(a,b){
+          // Turn your strings into dates, and then subtract them
+          // to get a value that is either negative, positive, or zero.
+          return new Date(b.orderedAt) - new Date(a.orderedAt)})
+
         const orders = {
           ordered: orderResponse.filter(order => order.state === "Ordered"),
           inProgress: orderResponse.filter(
-            order => order.state === " In progress"
+            order => order.state === "In progress"
           ),
           inDelivery: orderResponse.filter(
             order => order.state === "In delivery"
@@ -64,18 +63,40 @@ class OrdersPage extends React.Component {
         };
 
         this.setState({
-          orders,
-          complete: true
+          orders
         });
 
       }).catch(err => console.error(err));
   }
 
+  handleRemove = id => {
+
+    const auth = authHeader();
+    let requestOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: auth
+      },
+      body: JSON.stringify({ _id: id })
+    };
+
+    fetch(`http://localhost:8080/order/remove`, requestOptions)
+    .then(handleResponse)
+    .then(response => {
+      this.componentDidMount();
+    }).catch(err => console.error(err));
+
+  }
+
   render() {
     return (
       <>
-        {this.state.complete ? (
-          <OrdersList orders={this.state.orders} />
+        {this.state.orders ? (
+          <OrdersList 
+          orders={this.state.orders}
+          remove={this.handleRemove}
+           />
         ) : (
           <>
           <div className="spinner-border text-dark mt-4" role="status">

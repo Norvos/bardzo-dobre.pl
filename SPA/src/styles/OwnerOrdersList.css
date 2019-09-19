@@ -1,0 +1,16 @@
+.orders-list {
+  width: 100%;
+  max-width: 75%;
+  margin: auto;
+  position: relative;
+  margin-top: 20px;
+
+}
+.orders-list :hover {
+  cursor: pointer;
+}
+
+.orders-list span {
+  font-size: 20px;
+}
+

@@ -1,22 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Dishes from "../components/Dishes";
+import Dishes from "../DishList";
+import '../../styles/OrdersTable.css'
+
+const dateOptions = {
+  year: "2-digit",
+  month: "2-digit",
+  day: "2-digit"
+};
+
+const timeOptions = {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: false
+};
 
 const OrdersTable = props => {
-  const dateOptions = {
-    year: "2-digit",
-    month: "2-digit",
-    day: "2-digit"
-  };
+  
+  let addedItems = props.orders.map(order => {
 
-  const timeOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false
-  };
+    let specialButtons = null;
 
-  let addedItems = props.orders.map(order => (
-    <tr key={order._id} >
+    if(order.state === "Ordered") {
+      specialButtons = 
+       <td className="align-middle">
+       <button className="btn btn-danger" onClick={() => props.remove(order._id)}>Odrzuć</button>
+       </td>
+    }
+
+    return (<tr key={order._id} >
       <td className="align-middle">
         <Link
           to={`/restaurant/${order.restaurantID}`}
@@ -25,6 +37,7 @@ const OrdersTable = props => {
         </Link>
       </td>
       <td className="align-middle"><h6>{order.restaurant.address} </h6></td>
+      {specialButtons}
       <td className="align-middle">
         <Dishes dishes={order.dishes} />
       </td>
@@ -35,11 +48,11 @@ const OrdersTable = props => {
       <h6>{new Date(order.orderedAt).toLocaleDateString("en-GB", dateOptions)} <br />
         {`${new Date(order.orderedAt).toLocaleTimeString("en-US", timeOptions)}`}</h6>
       </td>
-    </tr>
-  ));
+    </tr>)
+    });
 
   return (
-    <table className="table table-striped table-borderless text-justify-center text-center">
+    <table className="table table-bordered text-justify-center text-center order-table">
       <tbody>{addedItems}</tbody>
     </table>
   );

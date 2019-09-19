@@ -3,9 +3,9 @@ import "../styles/MainPage.css";
 import { handleResponse } from "../helpers/HandleResponse";
 import { authHeader } from "../helpers/AuthHelper";
 import RestaurantThumbnail from "../components/RestaurantThumbnail";
-import SearchForm from "../components/SearchForm";
-import Welcome from '../components/Welcome';
-import OwnerWelcome from '../components/OwnerWelcome';
+import SearchForm from "../components/User/SearchForm";
+import Welcome from '../components/User/Welcome';
+import OwnerWelcome from '../components/Owner/Welcome';
 import {Link} from 'react-router-dom';
 
 class MainPage extends React.Component {
@@ -41,7 +41,8 @@ class MainPage extends React.Component {
     const restaurants = this.state.response.map(restaurant => (
       <Link
       to={`/restaurant/${restaurant._id}`}
-      style={{ textDecoration: "none", color: "black" }} >
+      style={{ textDecoration: "none", color: "black" }}
+      key={restaurant._id} >
       <RestaurantThumbnail
         restaurant={restaurant}
         key={restaurant._id}

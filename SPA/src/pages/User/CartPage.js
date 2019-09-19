@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {removeItem,addQuantity,subtractQuantity,emptyTheCart} from "../actions/CartActions";
-import "../styles/CartList.css";
-import { handleResponse } from "../helpers/HandleResponse";
-import { authHeader } from "../helpers/AuthHelper";
-import CartProductsList from "../components/CartProductsList";
+import {removeItem,addQuantity,subtractQuantity,emptyTheCart} from "../../actions/CartActions";
+import "../../styles/CartList.css";
+import { handleResponse } from "../../helpers/HandleResponse";
+import { authHeader } from "../../helpers/AuthHelper";
+import CartProductsList from "../../components/User/CartProductsList";
 import alertify from 'alertifyjs';
 
+
 class Cart extends Component {
+
+
   handleRemove = item => {
     this.props.removeItem(item);
   };
@@ -48,6 +51,7 @@ class Cart extends Component {
 
       alertify.alert("Twoje zamównie zostało złożone. Znajdziesz je w zakładce zamówniania ")
   };
+  
 
   render() {
     return !this.props.items.length ? (
@@ -64,6 +68,7 @@ class Cart extends Component {
     );
   }
 }
+
 
 const mapStateToProps = state => {
   return {

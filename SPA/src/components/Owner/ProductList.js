@@ -7,7 +7,7 @@ const OwnerProductList = props => {
     <tr key={dish._id} className="product-list">
       <td className=""> {dish.name}</td>
       <td className=""> {dish.description}</td>
-      <td className=""> Cena: {dish.cost} zł</td>
+      <td className=""> {dish.cost} zł</td>
       <td>
         {dish.available ? (
           <button

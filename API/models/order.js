@@ -32,7 +32,7 @@ export async function create(req) {
 
 
 const getOrderForEdit = async (req) => {
-  const order = await Order.findById(req.body.orderID);
+  const order = await Order.findById(req.body._id);
   if(!order) throw new Error("Order not found");
   if(order.state === "Finalised") throw new Error("You cannot edit finished order");
   return order;
@@ -68,7 +68,7 @@ export async function getMyTodaysOrders(req) {
   const restaurant = await Restaurant.findById(req.body.restaurantID);
   if(!restaurant) throw new Error("Cannot find restaurant");
   
-  if(restaurant.ownerID != req.session.user_sid) 
+  if(restaurant.ownerID != req.decoded.id) 
   throw new Error("You cannot get someone's orders");
 
   const orders = await Order.find({restaurantID : req.body.restaurantID});
@@ -82,7 +82,7 @@ export async function getAllOrders(req) {
   if(!restaurant) throw new Error("Cannot find restaurant");
   
   if(restaurant.ownerID != req.decoded.id) 
-  throw new Error("You cannot get someone's orders");
+  throw new Error("You cannot get someone's orders!");
 
   const result = await Order.find({restaurantID : req.body.restaurantID});
   if(!req.body.startDate && !req.body.endDate) return result;

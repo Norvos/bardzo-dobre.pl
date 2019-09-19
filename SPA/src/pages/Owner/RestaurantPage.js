@@ -1,17 +1,18 @@
 import React from "react";
-import { handleResponse } from "../helpers/HandleResponse";
-import { authHeader } from "../helpers/AuthHelper";
-import OwnerProductList from "../components/OwnerProductList";
+import { handleResponse } from "../../helpers/HandleResponse";
+import { authHeader } from "../../helpers/AuthHelper";
+import ProductList from "../../components/Owner/ProductList";
 import alertify from "alertifyjs";
-import RestaurantInfo from "../components/RestaurantInfo";
-import Spinner from "../components/Spinner";
+import RestaurantInfo from "../../components/RestaurantInfo";
+import Spinner from "../../components/Spinner";
 import {Link} from 'react-router-dom';
 
 class RestaurantPanelPage extends React.Component {
   state = {
     dishes: [],
     restaurant: null,
-    orders: []
+    orders: [],
+    message: ""
   };
 
   handleRestaurantOpen = () => {
@@ -146,7 +147,7 @@ class RestaurantPanelPage extends React.Component {
       .then(response => {
         if (response.length === 0)
           this.setState({ message: "Brak dostępnych produktów" });
-        else this.setState({ dishes: response });
+        else this.setState({ dishes: response, message: "" });
       })
       .catch(err => console.error(err));
   }
@@ -161,13 +162,13 @@ class RestaurantPanelPage extends React.Component {
                 <RestaurantInfo restaurant={this.state.restaurant} />
                 {this.state.restaurant.open ? (
                   <button
-                    className="btn btn-dark mt-2"
+                    className="btn btn-outline-dark mt-2"
                     onClick={this.handleRestaurantClose}>
                     Zamknij restaurację
                   </button>
                 ) : (
                   <button
-                    className="btn btn-dark mt-2"
+                    className="btn btn-outline-dark mt-2"
                     onClick={this.handleRestaurantOpen}>
                     Otwórz restaurację
                   </button>
@@ -178,9 +179,9 @@ class RestaurantPanelPage extends React.Component {
             )}
           </div>
           <div className="col-7">
-            {this.state.dishes ? (
+            {this.state.dishes.length ? (
               <>
-              <OwnerProductList
+              <ProductList
                 dishes={this.state.dishes}
                 restaurant={this.state.restaurant}
                 remove={this.handleDishRemove}
@@ -191,7 +192,8 @@ class RestaurantPanelPage extends React.Component {
                 <button className="btn btn-primary mr-2"> Dodaj nowe danie</button></Link>
               </div>
              </>
-            ) : (
+            ) : this.state.message ? <h4 className="mb-4">{this.state.message}</h4> :
+            (
               <Spinner message="Trwa pobieranie listy dań ..." />
             )}
           </div>

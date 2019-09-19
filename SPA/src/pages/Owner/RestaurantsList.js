@@ -1,9 +1,9 @@
 import React from "react";
-import { handleResponse } from "../helpers/HandleResponse";
-import { authHeader } from "../helpers/AuthHelper";
-import RestaurantThumbnail from "../components/RestaurantThumbnail";
+import { handleResponse } from "../../helpers/HandleResponse";
+import { authHeader } from "../../helpers/AuthHelper";
+import RestaurantThumbnail from "../../components/RestaurantThumbnail";
 import {Link} from 'react-router-dom';
-import Spinner from '../components/Spinner';
+import Spinner from '../../components/Spinner';
 
 class OwnerRestaurantsPage extends React.Component {
   state = {

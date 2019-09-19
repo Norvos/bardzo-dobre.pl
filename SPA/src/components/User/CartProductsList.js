@@ -7,8 +7,8 @@ const CartProductsList = props => {
     <tr key={item._id} className="product-list">
       <td className=""> {item.name}</td>
       <td className=""> {item.description}</td>
-      <td className=""> Cena: <b>{item.cost} zł</b></td>
-      <td className=""> Ilość: <b>{item.quantity}</b></td>
+      <td className="">  <b>{item.cost} zł</b></td>
+      <td className=""> <b>{item.quantity}</b></td>
       <td>
         <button onClick={() => props.handleAddQuantity(item)}>
           <FontAwesomeIcon icon="plus" />
@@ -29,8 +29,15 @@ const CartProductsList = props => {
 
   return ( 
   <table className="table cart-list table-striped mt-3 table-borderless">
+    <thead>
+    <tr>
+      <th scope="col"><h5>Twój koszyk</h5></th>
+      <th scope="col"></th>
+      <th scope="col"><h5>Cena</h5></th>
+      <th scope="col"><h5>Ilość</h5></th>
+    </tr>
+  </thead>
   <tbody>
-  <tr><td colSpan="7" align="left"><h4>Twój koszyk:</h4></td></tr>
     {addedItems}
     <tr className="table-light">
       <td align="right" colSpan="7">

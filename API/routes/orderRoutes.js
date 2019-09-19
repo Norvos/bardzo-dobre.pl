@@ -23,12 +23,11 @@ router.put('/order/changeToFinalised',
 catchAsyncErrors(ownerAuthorize),
 catchAsyncErrors(changeToFinalised));
 
-router.get('/order/getMyTodaysOrders',
+router.post('/order/getMyTodaysOrders',
 catchAsyncErrors(ownerAuthorize),
 catchAsyncErrors(getMyTodaysOrders));
 
 router.delete('/order/remove',
-catchAsyncErrors(userAuthorize),
 catchAsyncErrors(remove));
 
 router.post('/order/getAllOrders',

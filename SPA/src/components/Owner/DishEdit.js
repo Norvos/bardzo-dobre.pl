@@ -2,8 +2,8 @@ import React from 'react';
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import { handleResponse } from "../helpers/HandleResponse";
-import { authHeader } from "../helpers/AuthHelper";
+import { handleResponse } from "../../helpers/HandleResponse";
+import { authHeader } from "../../helpers/AuthHelper";
 import alertify from 'alertifyjs';
 import {Redirect} from 'react-router-dom';
 
@@ -17,30 +17,31 @@ const DishSchema = Yup.object().shape({
 });
 
 
-class DishCreate extends React.Component {
+class DishEdit extends React.Component {
   state = {complete : false}
 
   handleSumbit = dish => {
 
     const auth = authHeader();
     let requestOptions = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: auth
       },
       body: JSON.stringify({ 
-        restaurantID: this.props.location.state.restaurant._id,
+        _id :  this.props.location.state.dish._id,
+        restaurantID: this.props.location.state.dish.restaurantID,
         name : dish.name,
         cost : dish.cost,
         description : dish.description
        })
     };
 
-    fetch(`http://localhost:8080/dish/add`, requestOptions)
+    fetch(`http://localhost:8080/dish/edit`, requestOptions)
     .then(handleResponse)
     .then(response => {
-      alertify.alert("Danie zostało dodane pomyślnie");
+      alertify.alert("Danie zostało wyedytowane pomyślnie");
       this.setState({complete: true})
     })
     .catch(err => console.log(err));
@@ -49,15 +50,16 @@ class DishCreate extends React.Component {
   
 
   render() { 
+    const {name , cost, description, restaurantID} = this.props.location.state.dish;
     
     return (<>
-     {this.state.complete ? <Redirect to={`/restaurants/${this.props.location.state.restaurant._id}`}/> : null}
+     {this.state.complete ? <Redirect to={`/restaurants/${restaurantID}`}/> : null}
 
     <Formik
           initialValues={{
-            name: "",
-            cost: "",
-            description: ""
+            name: name,
+            cost: cost,
+            description: description
           }}
           validationSchema={DishSchema}
           onSubmit={values => {
@@ -66,7 +68,7 @@ class DishCreate extends React.Component {
         >
           {({ errors, touched }) => (
             <Form className="form-signin">
-              <h1 className="h3 mb-3 font-weight-normal">Dodaj nowe danie</h1>
+              <h1 className="h3 mb-3 font-weight-normal">Edytuj danie</h1>
 
               <Field name="name" type="text" className="form-control" placeholder="Wpisz nazwę dania" />
               {errors.name && touched.name ? <div className="text-danger">{errors.name}</div> : null}
@@ -81,11 +83,11 @@ class DishCreate extends React.Component {
                 <div className="text-danger">{errors.description}</div>
               ) : null}
 
-              <button className="btn btn-lg btn-dark btn-block" type="submit">Dodaj</button>
+              <button className="btn btn-lg btn-dark btn-block" type="submit">Edytuj</button>
             </Form>
           )}
         </Formik></>);
   }
 }
  
-export default DishCreate;
+export default DishEdit;
