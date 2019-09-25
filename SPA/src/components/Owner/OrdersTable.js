@@ -80,6 +80,10 @@ const OwnerOrdersTable = props => {
     return (
       <tr key={order._id}>
         <td className="align-middle">
+        <h6>{order.user.firstName} {order.user.lastName}</h6>  
+        {order.user.address}
+    </td>
+        <td className="align-middle">
           <DishList dishes={order.dishes} />
         </td>
 
@@ -90,7 +94,7 @@ const OwnerOrdersTable = props => {
         </td>
         <td className="align-middle">
           <h6>
-            {new Date(order.orderedAt).toLocaleDateString("en-GB", dateOptions)}{" "}
+            {new Date(order.orderedAt).toLocaleDateString("en-GB", dateOptions)}
             <br />
             {`${new Date(order.orderedAt).toLocaleTimeString(
               "en-US",
@@ -112,7 +116,7 @@ const OwnerOrdersTable = props => {
           <h3>{props.restaurant.name}</h3>{" "}
         </div>
       </Link>
-      <table className="table table-bordered text-justify-center text-center ">
+      <table className="table table-bordered text-justify-center text-center">
         <tbody>{addedItems}</tbody>
       </table>
     </>

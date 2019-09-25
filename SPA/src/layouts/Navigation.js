@@ -47,6 +47,11 @@ const Navigation = props => {
           <FontAwesomeIcon icon="tasks"/> Zamównienia
           <span className="sr-only">(current)</span></NavLink>
           </li> 
+          <li className="nav-item active my-2 my-lg-0">
+          <NavLink className="nav-link" to="/history"> 
+          <FontAwesomeIcon icon="book"/> Historia
+          <span className="sr-only">(current)</span></NavLink>
+          </li> 
           </>}
           <li className="nav-item active my-2 my-lg-0">
             <NavLink onClick={() => authenticationService.logout()} className="nav-link" to="/"> 

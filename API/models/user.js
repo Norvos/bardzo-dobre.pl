@@ -59,7 +59,7 @@ export async function login(req) {
 }
 
 export async function register(req) {
-  console.log(req.body);
+ 
   const user = await User.findOne({ email: req.body.email });
 
   if (user) throw new Error("User already exists");
@@ -71,6 +71,14 @@ export async function register(req) {
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync())
   }).save();
+}
+
+export async function getUser(req) {
+
+  const user = await User.findById(req.body.userID);
+
+  if (!user) throw new Error("User doesn't  exists");
+  else return user;
 }
 
 export async function remove(req) {

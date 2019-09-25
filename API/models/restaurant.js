@@ -91,8 +91,11 @@ export async function close(req)
   if(!restaurant) throw new Error("Cannot find the restaurant");
   if(!restaurant.open) throw new Error("Restaurant is already closed");
 
-  const orders = await Order.find({restaurantID : restaurant._id});
-  
+  const orders = await Order.find({restaurantID : restaurant._id, 
+  orderedAt : new Date().toLocaleDateString()});
+
+  console.log(orders);
+
   orders.forEach(order => {
     if(order.state !== "Finalised")
     throw new Error("You cannot close the restaurant with orders in progress");

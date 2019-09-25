@@ -34,9 +34,11 @@ class OwnerRestaurantsPage extends React.Component {
       <Link to={`/restaurants/${restaurant._id}`} key={restaurant._id} style={{ textDecoration: "none", color: "black" }}> <RestaurantThumbnail restaurant={restaurant} key={restaurant._id} /> </Link>);
 
     return (
-        this.state.restaurants ? <div className="p-3">{restaurants}</div> : 
+        this.state.restaurants.length ? <div className="p-3">{restaurants}</div> : 
             this.state.message ? <h4 className="mt-4">{this.state.message}</h4> :
-          <Spinner message="Trwa pobieranie listy restauracji..."/> 
+            <div className="orders-list col-5 mt-4">
+               <Spinner message="Trwa pobieranie listy restauracji" />
+           </div>
     );
   }
 }

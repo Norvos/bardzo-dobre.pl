@@ -4,9 +4,11 @@
   margin: auto;
   position: relative;
 }
+
+
 .restaurant-thumbnail:hover {
  cursor: pointer;
- opacity: 0.8;
+ opacity: 0.9;
 }
 .card-footer {
   margin: 0;

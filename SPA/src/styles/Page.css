@@ -1,0 +1,6 @@
+body {
+  background: url("../images/main-page2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: max-content;
+}

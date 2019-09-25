@@ -6,11 +6,9 @@ import { handleResponse } from "../../helpers/HandleResponse";
 import { authHeader } from "../../helpers/AuthHelper";
 import CartProductsList from "../../components/User/CartProductsList";
 import alertify from 'alertifyjs';
-
+import '../../styles/OrdersList.css';
 
 class Cart extends Component {
-
-
   handleRemove = item => {
     this.props.removeItem(item);
   };
@@ -55,7 +53,14 @@ class Cart extends Component {
 
   render() {
     return !this.props.items.length ? (
-      <h4 className="mt-4">Twój koszyk jest pusty</h4>
+      <>
+      <div className="card mt-5 orders-list col-5">
+        <div className="card-body">
+        <h3 className="">Twój koszyk jest pusty</h3>
+        </div>
+      </div>
+     
+      </>
     ) : (
       <CartProductsList 
       items={this.props.items} 
@@ -77,6 +82,8 @@ const mapStateToProps = state => {
     restaurantID: state.restaurantID
   };
 };
+
+
 const mapDispatchToProps = dispatch => {
   return {
     removeItem: id => {

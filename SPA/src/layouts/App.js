@@ -4,6 +4,7 @@ import Navigation from "./Navigation";
 import Page from "./Page";
 import { authenticationService } from '../services/authenticationService';
 
+
 class App extends React.Component {
 
 state = {
@@ -19,7 +20,7 @@ componentDidMount() {
     <div className="text-center">
         <BrowserRouter>
             <Navigation user = {this.state.currentUser}/>
-            <Page user = {this.state.currentUser} />
+            <Page user = {this.state.currentUser}/>
         </BrowserRouter>
     </div>
   );

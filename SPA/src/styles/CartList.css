@@ -1,5 +1,10 @@
 .cart-list{
-  max-width: 60%;
+  max-width: 70%;
+  position: relative;
+  margin: auto;
+}
+.cart-sum{
+  max-width: 30%;
   position: relative;
   margin: auto;
 }

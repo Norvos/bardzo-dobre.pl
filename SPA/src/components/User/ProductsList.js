@@ -27,7 +27,7 @@ const ProductList = props => {
 
   return (
     products.length ? 
-    <table className="table table-striped  table-borderless">
+    <table className="table table-striped  table-borderless table-light">
     <tbody className="">
       <tr><td colSpan="4" align="left"><h4>Lista dostępnych produktów:</h4></td></tr>
     {products}

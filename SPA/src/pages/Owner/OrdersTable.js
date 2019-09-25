@@ -1,9 +1,10 @@
 import React from 'react';
 import { handleResponse } from "../../helpers/HandleResponse";
 import { authHeader } from "../../helpers/AuthHelper";
-import '../../styles/OwnerOrdersList.css';
+import '../../styles/OrdersList.css';
 import Spinner from '../../components/Spinner';
-import {Link} from 'react-router-dom';
+import Warning from '../../components/Owner/Warning';
+import {orderSort} from '../../helpers/Functions';
 
 class OwnerOrdersList extends React.Component {
   state = { 
@@ -32,7 +33,6 @@ class OwnerOrdersList extends React.Component {
         .catch(err => console.error(err));
 
        
-
         restaurants = restaurants.map(async (restaurant) => {
           const auth = authHeader();
           const requestOptions = {
@@ -49,16 +49,7 @@ class OwnerOrdersList extends React.Component {
           .then(handleResponse)
           .then(response => {
           
-            const orders = {
-              ordered: response.filter(order => order.state === "Ordered"),
-              inProgress: response.filter(
-                order => order.state === "In progress"
-              ),
-              inDelivery: response.filter(
-                order => order.state === "In delivery"
-              ),
-              finalised: response.filter(order => order.state === "Finalised")
-              }
+              const orders = orderSort(response);
               restaurant.orders = orders;
           })
           .catch(err => console.error(err));
@@ -87,7 +78,7 @@ class OwnerOrdersList extends React.Component {
     return (
     <>
     {this.state.restaurants.length ? <>
-    <table className="table table-striped table-borderless text-justify-center text-center table-hover orders-list">
+    <table className="table table-striped table-borderless table-light text-justify-center table-hover orders-list mt-3">
     <thead>
     <tr>
       <th scope="col"></th>
@@ -97,11 +88,15 @@ class OwnerOrdersList extends React.Component {
     </tr>
   </thead>
     <tbody>
-    {restaurants}
+      {restaurants}
     </tbody>
-    </table> <h5 className="text-danger">Uwaga! W tej zakładce widoczne są tylko dzisiejsze zamówienia.</h5>
-    <h6 className="">Jeśli chcesz zobaczyć wszystkie przejdz do zakładki <Link to='/history' style={{ textDecoration: "none", color: "black" }}><b>historia</b></Link></h6></>:
-    <Spinner message="Trwa ładowanie listy zamówień" className="mt4"/>}
+  </table>  
+  <Warning />
+    </>
+   
+    : <div className="orders-list col-5 mt-4">
+          <Spinner message="Trwa ładowanie listy zamówień" />
+      </div>}
     </>);
   }
 }

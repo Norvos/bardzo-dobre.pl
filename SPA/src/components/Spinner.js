@@ -3,14 +3,16 @@ import React from 'react';
 
 const Spinner = props => {
   return (  
-    <>
+    <div className="card">
+      <div className="card-body"> 
     <div className="spinner-border text-dark mt-4" role="status">
       <span className="sr-only"></span>
     </div>
-    <h4 className="mt-2">
+    <h3 className="mt-2 font-weight-bold">
      {props.message}
-    </h4>
-  </>
+    </h3>
+  </div>
+  </div>
   );
 }
  

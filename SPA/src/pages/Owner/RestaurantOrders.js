@@ -3,6 +3,8 @@ import OrdersList from "../../components/Owner/OrdersList";
 import Spinner from '../../components/Spinner';
 import { handleResponse } from "../../helpers/HandleResponse";
 import { authHeader } from "../../helpers/AuthHelper";
+import {orderSort} from '../../helpers/Functions';
+import Warning from '../../components/Owner/Warning';
 
 class RestaurantOrders extends React.Component {
   state = { 
@@ -29,30 +31,32 @@ class RestaurantOrders extends React.Component {
 
      
     fetch(`http://localhost:8080/order/getMyTodaysOrders`, requestOptions)
-    .then(handleResponse)
-    .then(response => {
+      .then(handleResponse)
+      .then(response => {
 
-      response = response.sort(function(a,b){
-        // Turn your strings into dates, and then subtract them
-        // to get a value that is either negative, positive, or zero.
-        return new Date(b.orderedAt) - new Date(a.orderedAt)})
+        if (response.length === 0) this.setState({ message: "Brak zamówień" });
+         else { 
+      
+          response = response.map(async order => {
+          requestOptions.body =  JSON.stringify({ userID: order.userID})
 
-      const orders = {
-        ordered: response
-        .filter(order => order.state === "Ordered"),
-        
-        inProgress: response.filter(
-          order => order.state === "In progress"
-        ),
-        inDelivery: response.filter(
-          order => order.state === "In delivery"
-        ),
-        finalised: response
-        .filter(order => order.state === "Finalised"),
-      }
-       
-        this.setState({orders})
-    }).catch(err => console.error(err));
+          await fetch(`http://localhost:8080/user/get`, requestOptions)
+          .then(handleResponse)
+          .then(response => {
+            order.user=response;
+          }).catch(err => console.error(err));
+            return order;
+          });
+          
+           return Promise.all(response);
+
+        }}).then(response => {
+         
+        const orders  = orderSort(response);
+         
+        this.setState({orders, message : ""});
+
+        }).catch(err => console.error(err));
 
   }
 
@@ -147,8 +151,18 @@ class RestaurantOrders extends React.Component {
            changeToInDelivery={this.handleChangeToInDelivery}
            changeToFinalised={this.handleChangeToFinalised}
            /> :
-          <Spinner message={"Trwa ładowanie listy zamówień"}/>
+           this.state.message ? 
+           <div className="card orders-list col-5 mt-4">
+             <div className="card-body h3"> {this.state.message}</div>
+           </div>
+           :
+           <div className="orders-list col-5 mt-4">
+           <Spinner message={"Trwa ładowanie listy zamówień"}/>
+           </div> }
         }
+        <div className="mt-2">
+      <Warning />
+      </div>
         
     </>);
   }

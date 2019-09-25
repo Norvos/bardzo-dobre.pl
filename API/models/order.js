@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import {DishSchema} from './dish';
 import {Restaurant} from './restaurant';
+import { User } from './user';
 
 const Schema = mongoose.Schema;
  
@@ -84,17 +85,18 @@ export async function getAllOrders(req) {
   if(restaurant.ownerID != req.decoded.id) 
   throw new Error("You cannot get someone's orders!");
 
-  const result = await Order.find({restaurantID : req.body.restaurantID});
-  if(!req.body.startDate && !req.body.endDate) return result;
-  else if(req.body.startDate && req.body.endDate)
-  {
-    const startDate =  new Date(req.body.startDate);
-    const endDate =  new Date(req.body.endDate);
+   const orders = await Order.find({restaurantID : req.body.restaurantID});
 
-    if(startDate == "Invalid Date" || endDate == "Invalid Date")
-    throw new Error("Invalid data format");
-   
-    return result.filter(
-    order => order.orderedAt >= startDate && order.orderedAt <= endDate);
-  }
-}
+    if(!req.body.date) return orders;
+    else 
+    {
+      const date =  new Date(req.body.date);
+      
+      if(date == "Invalid Date")
+      throw new Error("Invalid data format");
+      
+      return orders.filter(
+      order => order.orderedAt.toLocaleDateString() == date.toLocaleDateString());
+    } 
+  
+};

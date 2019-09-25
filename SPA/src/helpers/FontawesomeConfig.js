@@ -1,6 +1,6 @@
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSignOutAlt, faSignInAlt,faFileSignature,faHome,faShoppingCart, faPizzaSlice, faCartPlus,faTasks,faPlus, faMinus, faTrash, faDoorClosed, faDoorOpen, faUtensils } 
+import { faSignOutAlt, faSignInAlt,faFileSignature,faHome,faShoppingCart, faPizzaSlice, faCartPlus,faTasks,faPlus, faMinus, faTrash, faDoorClosed, faDoorOpen, faUtensils, faBook } 
 from "@fortawesome/free-solid-svg-icons";
 
-library.add(faSignOutAlt,faSignInAlt,faFileSignature,faHome,faShoppingCart,faPizzaSlice, faCartPlus,faTasks,faPlus, faMinus, faTrash, faDoorClosed, faDoorOpen,faUtensils );
+library.add(faSignOutAlt,faSignInAlt,faFileSignature,faHome,faShoppingCart,faPizzaSlice, faCartPlus,faTasks,faPlus, faMinus, faTrash, faDoorClosed, faDoorOpen,faUtensils,faBook );

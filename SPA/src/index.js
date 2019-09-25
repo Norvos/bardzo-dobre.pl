@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./layouts/App";
 
+
 import cartReducer from "./reducers/cartReducer";
 import { Provider } from "react-redux";
 import { createStore } from "redux";

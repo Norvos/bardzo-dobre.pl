@@ -41,4 +41,9 @@ export async function getMyOrders(req, res, next){
   if (process.env.NODE_ENV === 'development') console.log('LOGIN COMPLETE');
 }
 
+export async function getUser(req, res, next){
+  const result = await User.getUser(req);
+  res.status(200).json(result);
+}
+
 

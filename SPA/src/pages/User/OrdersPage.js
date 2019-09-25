@@ -2,6 +2,7 @@ import React from "react";
 import OrdersList from "../../components/User/OrdersList";
 import { handleResponse } from "../../helpers/HandleResponse";
 import { authHeader } from "../../helpers/AuthHelper";
+import {orderSort} from '../../helpers/Functions';
 
 class OrdersPage extends React.Component {
   state = {
@@ -46,26 +47,8 @@ class OrdersPage extends React.Component {
 
       }).then(orderResponse => {
 
-        orderResponse = orderResponse.sort(function(a,b){
-          // Turn your strings into dates, and then subtract them
-          // to get a value that is either negative, positive, or zero.
-          return new Date(b.orderedAt) - new Date(a.orderedAt)})
-
-        const orders = {
-          ordered: orderResponse.filter(order => order.state === "Ordered"),
-          inProgress: orderResponse.filter(
-            order => order.state === "In progress"
-          ),
-          inDelivery: orderResponse.filter(
-            order => order.state === "In delivery"
-          ),
-          finalised: orderResponse.filter(order => order.state === "Finalised")
-        };
-
-        this.setState({
-          orders
-        });
-
+        const orders = orderSort(orderResponse);
+        this.setState({orders});
       }).catch(err => console.error(err));
   }
 

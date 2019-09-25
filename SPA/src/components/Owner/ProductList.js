@@ -42,7 +42,7 @@ const OwnerProductList = props => {
   return (
     <>
       {products.length ? (
-        <table className="table table-striped  table-borderless">
+        <table className="table table-striped  table-borderless table-light">
           <tbody className="">
             <tr>
               <td colSpan="5" align="left">

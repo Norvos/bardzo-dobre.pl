@@ -42,8 +42,12 @@ class Login extends React.Component {
         >
           {({ errors, touched }) => (
             <Form className="form-signin">
-              <h1 className="h3 mb-3 font-weight-normal">Logowanie</h1>
-
+              <div className="card">
+              <div className="card-header">
+              <h3 className="mb-3">Logowanie</h3>
+              </div>
+             
+              <div className="card-body">
               <Field name="email" type="email" className="form-control" placeholder="Wpisz e-mail" />
               {errors.email && touched.email ? <div className="text-danger">{errors.email}</div> : null}
 
@@ -51,8 +55,13 @@ class Login extends React.Component {
               {errors.password && touched.password ? (
                 <div className="text-danger">{errors.password}</div>
               ) : null}
-
-              <button className="btn btn-lg btn-dark btn-block" type="submit">Zaloguj</button>
+              </div>
+             
+              <div className="card-footer text-center">
+              <button className="btn btn-lg btn-outline-dark" type="submit">Zaloguj</button>
+              </div>
+             
+              </div>
             </Form>
           )}
         </Formik>

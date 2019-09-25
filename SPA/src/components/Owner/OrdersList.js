@@ -2,14 +2,13 @@ import React from "react";
 import "../../styles/OrdersList.css";
 import OrdersTable from "./OrdersTable";
 import Accordion from "../Accordion";
-import {Link} from 'react-router-dom';
 
 const OrdersList = props => {
 
   const { ordered, inProgress, inDelivery, finalised} = props.orders;
 
   return (<>
-    <div className="accordion orders-list mt-3" id="accordion">
+    <div className="accordion mt-3 orders-list" id="accordion">
       <Accordion
         collapse="show"
         parent="accordion"
@@ -52,9 +51,6 @@ const OrdersList = props => {
         restaurant={props.restaurant}
       />
     </div>
-    <div style={{padding : "20px"}}>
-    <h5 className="text-danger">Uwaga! W tej zakładce widoczne są tylko dzisiejsze zamówienia.</h5>
-     <h6 className="">Jeśli chcesz zobaczyć wszystkie przejdz do zakładki <Link to='/history' style={{ textDecoration: "none", color: "black" }}><b>historia</b></Link></h6></div>
      </>
   );
 };

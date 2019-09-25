@@ -1,21 +1,45 @@
-.main-search-form {
-  width: 100%;
-  max-width: 40%;
-  padding: 15px;
+ .main-search-form {
+  position: relative;
   margin: auto;
-  padding-top: 40px;
+  width: 35%;
+  padding-top: 3%;
+  
+} 
+
+.not-found {
+  margin: auto;
+  position: relative;
+  margin-top: 5%;
+  width: 50%;
+  height: 50%;
 }
+.welcome{
+  max-width: 55%;
+  margin: auto;
+  position: relative;
+  margin-top: 10%;
+}
+
+.welcome-owner{
+  max-width: 55%;
+  margin: auto;
+  position: relative;
+  margin-top: 2%;
+}
+
 
 .main-search-form .form-control {
   position: relative;
   box-sizing: border-box;
-  height: auto;
   padding: 10px;
   font-size: 16px;
+  height: 50px;
 }
+
 .main-search-form button {
   padding: 10px;
   width: 30%;
+  height: 100%;
 }
 
 .main-search-form .form-control:focus {

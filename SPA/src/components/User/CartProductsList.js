@@ -5,10 +5,9 @@ const CartProductsList = props => {
 
   let addedItems = props.items.map(item => (
     <tr key={item._id} className="product-list">
-      <td className=""> {item.name}</td>
-      <td className=""> {item.description}</td>
-      <td className="">  <b>{item.cost} zł</b></td>
-      <td className=""> <b>{item.quantity}</b></td>
+      <td className=""> <h5>{item.name} </h5></td>
+      <td className=""> <h5>{item.cost} zł</h5></td>
+      <td className=""> <h5>{item.quantity}</h5></td>
       <td>
         <button onClick={() => props.handleAddQuantity(item)}>
           <FontAwesomeIcon icon="plus" />
@@ -27,31 +26,41 @@ const CartProductsList = props => {
     </tr>
   ));
 
-  return ( 
-  <table className="table cart-list table-striped mt-3 table-borderless">
-    <thead>
-    <tr>
-      <th scope="col"><h5>Twój koszyk</h5></th>
-      <th scope="col"></th>
-      <th scope="col"><h5>Cena</h5></th>
-      <th scope="col"><h5>Ilość</h5></th>
-    </tr>
-  </thead>
-  <tbody>
-    {addedItems}
-    <tr className="table-light">
-      <td align="right" colSpan="7">
-      <div className="d-inline-flex justify-content-lg-center">
-        <h5 className="">{`Koszt: ${props.total} zł`}</h5>
-      </div>
-      </td>
-      <td align="right">
-      <button className="btn btn-dark btn-md"  onClick={() => props.handleBtnClick()} >Zamów</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-);
+  return (
+    <>
+      <table className="table table-bordered cart-list table-striped mt-3 table-light">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col"><h5>Cena</h5></th>
+            <th scope="col"><h5>Ilość</h5></th>
+            <th scope="col"><h5>Dodaj</h5></th>
+            <th scope="col"><h5>Odejmij</h5></th>
+            <th scope="col"><h5>Usuń</h5></th>
+          </tr>
+        </thead>
+        <tbody>{addedItems}</tbody>
+      </table>
+          <table className="table table-light my-2 cart-sum">
+            <tbody>
+              <tr>
+                <td align="left" className="align-middle">
+                  <h5>
+                    <b>{`Koszt: ${props.total} zł`}</b>
+                  </h5>
+                </td>
+                <td align="right">
+                  <button
+                    className="btn btn-success btn-block"
+                    onClick={() => props.handleBtnClick()}>
+                  Zamów
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </>
+  );
 }
  
 export default CartProductsList;

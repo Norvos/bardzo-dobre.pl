@@ -13,15 +13,18 @@ import PropsRoute from '../components/PropsRoute';
 
 import '../styles/Page.css';
 
-import RestaurantsList from '../pages/Owner/RestaurantsList'
-import OwnerRestaurantPage from '../pages/Owner/RestaurantPage'
+import RestaurantsList from '../pages/Owner/RestaurantsList';
+import OwnerRestaurantPage from '../pages/Owner/RestaurantPage';
 import DishEdit from '../components/Owner/DishEdit';
 import DishCreate from '../components/Owner/DishCreate';
 import OrdersTable from '../pages/Owner/OrdersTable';
 import RestaurantOrders from '../pages/Owner/RestaurantOrders';
+import HistoryPage from '../pages/Owner/HistoryPage';
 import ErrorPage from '../pages/ErrorPage';
-const Page  = props => {
+
+const Page = props => {
   return (
+   
   <Switch>
     <PropsRoute path='/' exact component={MainPage} user={props.user}/>
     <Route path='/login' exact component={Login} />
@@ -35,8 +38,10 @@ const Page  = props => {
     <OwnerRoute path='/restaurants' exact component={RestaurantsList}/>
     <OwnerRoute path='/restaurants/:id' exact component={OwnerRestaurantPage}/>
     <OwnerRoute path='/ownerorders' exact component={OrdersTable}/>
+    <OwnerRoute path='/history' exact component={HistoryPage}/>
     <Route component={ErrorPage} />
-  </Switch>);
+  </Switch> 
+ );
 }
  
 export default Page;

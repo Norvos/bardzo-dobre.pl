@@ -45,7 +45,7 @@ class RestaurantPanelPage extends React.Component {
 
     if (alert) {
       alertify.alert(
-        "Nie możesz zamknąć restauracji ze względu na aktywne zlecenia."
+        "Nie możesz zamknąć restauracji ze względu na dzisiejsze aktywne zlecenia."
       );
       return;
     }
@@ -135,7 +135,7 @@ class RestaurantPanelPage extends React.Component {
       })
       .catch(err => console.error(err));
 
-    fetch(`http://localhost:8080/order/getAllOrders`, requestOptions)
+    fetch(`http://localhost:8080/order/getMyTodaysOrders`, requestOptions)
       .then(handleResponse)
       .then(response => {
         this.setState({ orders: response });
@@ -162,13 +162,13 @@ class RestaurantPanelPage extends React.Component {
                 <RestaurantInfo restaurant={this.state.restaurant} />
                 {this.state.restaurant.open ? (
                   <button
-                    className="btn btn-outline-dark mt-2"
+                    className="btn btn-dark mt-2"
                     onClick={this.handleRestaurantClose}>
                     Zamknij restaurację
                   </button>
                 ) : (
                   <button
-                    className="btn btn-outline-dark mt-2"
+                    className="btn btn-dark mt-2"
                     onClick={this.handleRestaurantOpen}>
                     Otwórz restaurację
                   </button>
@@ -180,22 +180,20 @@ class RestaurantPanelPage extends React.Component {
           </div>
           <div className="col-7">
             {this.state.dishes.length ? (
-              <>
               <ProductList
                 dishes={this.state.dishes}
                 restaurant={this.state.restaurant}
                 remove={this.handleDishRemove}
                 unremove={this.handleDishUnRemove}
               />
-              <div className="text-right">
-                <Link to={{pathname : "/dishcreate", state : {restaurant : this.state.restaurant}}}>
-                <button className="btn btn-primary mr-2"> Dodaj nowe danie</button></Link>
-              </div>
-             </>
-            ) : this.state.message ? <h4 className="mb-4">{this.state.message}</h4> :
+            ) : this.state.message ? <> <div className="mb-4 card"> <div className="card-body h4">{this.state.message}</div></div> </> :
             (
               <Spinner message="Trwa pobieranie listy dań ..." />
             )}
+            <div className="text-right">
+            <Link to={{pathname : "/dishcreate", state : {restaurant : this.state.restaurant}}}>
+            <button className="btn btn-primary mr-2"> Dodaj nowe danie</button></Link>
+          </div>
           </div>
         </div>
       </div>

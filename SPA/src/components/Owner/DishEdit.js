@@ -1,27 +1,22 @@
-import React from 'react';
+import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
 import { handleResponse } from "../../helpers/HandleResponse";
 import { authHeader } from "../../helpers/AuthHelper";
-import alertify from 'alertifyjs';
-import {Redirect} from 'react-router-dom';
+import alertify from "alertifyjs";
+import { Redirect } from "react-router-dom";
 
 const DishSchema = Yup.object().shape({
- name: Yup.string()
-    .required("Nazwa jest wymagana"),
-  cost: Yup.number()
-    .required("Cena jest wymagana"),
-  description : Yup.string()
-    .required("Opis jest wymagany")
+  name: Yup.string().required("Nazwa jest wymagana"),
+  cost: Yup.number().required("Cena jest wymagana"),
+  description: Yup.string().required("Opis jest wymagany")
 });
 
-
 class DishEdit extends React.Component {
-  state = {complete : false}
+  state = { complete: false };
 
   handleSumbit = dish => {
-
     const auth = authHeader();
     let requestOptions = {
       method: "PUT",
@@ -29,33 +24,39 @@ class DishEdit extends React.Component {
         "Content-Type": "application/json",
         Authorization: auth
       },
-      body: JSON.stringify({ 
-        _id :  this.props.location.state.dish._id,
+      body: JSON.stringify({
+        _id: this.props.location.state.dish._id,
         restaurantID: this.props.location.state.dish.restaurantID,
-        name : dish.name,
-        cost : dish.cost,
-        description : dish.description
-       })
+        name: dish.name,
+        cost: dish.cost,
+        description: dish.description
+      })
     };
 
     fetch(`http://localhost:8080/dish/edit`, requestOptions)
-    .then(handleResponse)
-    .then(response => {
-      alertify.alert("Danie zostało wyedytowane pomyślnie");
-      this.setState({complete: true})
-    })
-    .catch(err => console.log(err));
-
+      .then(handleResponse)
+      .then(response => {
+        alertify.alert("Danie zostało wyedytowane pomyślnie");
+        this.setState({ complete: true });
+      })
+      .catch(err => console.log(err));
   };
-  
 
-  render() { 
-    const {name , cost, description, restaurantID} = this.props.location.state.dish;
-    
-    return (<>
-     {this.state.complete ? <Redirect to={`/restaurants/${restaurantID}`}/> : null}
+  render() {
+    const {
+      name,
+      cost,
+      description,
+      restaurantID
+    } = this.props.location.state.dish;
 
-    <Formik
+    return (
+      <>
+        {this.state.complete ? (
+          <Redirect to={`/restaurants/${restaurantID}`} />
+        ) : null}
+
+        <Formik
           initialValues={{
             name: name,
             cost: cost,
@@ -68,26 +69,58 @@ class DishEdit extends React.Component {
         >
           {({ errors, touched }) => (
             <Form className="form-signin">
-              <h1 className="h3 mb-3 font-weight-normal">Edytuj danie</h1>
+              <div className="card">
+                <div className="card-header">
+                  <h3 className="">Edytuj danie</h3>
+                </div>
 
-              <Field name="name" type="text" className="form-control" placeholder="Wpisz nazwę dania" />
-              {errors.name && touched.name ? <div className="text-danger">{errors.name}</div> : null}
+                <div className="card-body">
+                  <Field
+                    name="name"
+                    type="text"
+                    className="form-control"
+                    placeholder="Wpisz nazwę dania"
+                  />
+                  {errors.name && touched.name ? (
+                    <div className="text-danger">{errors.name}</div>
+                  ) : null}
 
-              <Field name="cost" type="number" className="form-control" placeholder="Wpisz cenę" />
-              {errors.cost && touched.cost ? (
-                <div className="text-danger">{errors.cost}</div>
-              ) : null}
+                  <Field
+                    name="cost"
+                    type="number"
+                    className="form-control"
+                    placeholder="Wpisz cenę"
+                  />
+                  {errors.cost && touched.cost ? (
+                    <div className="text-danger">{errors.cost}</div>
+                  ) : null}
 
-               <Field name="description" type="text" className="form-control" placeholder="Wpisz opis" />
-              {errors.description && touched.description ? (
-                <div className="text-danger">{errors.description}</div>
-              ) : null}
+                  <Field
+                    name="description"
+                    type="text"
+                    className="form-control"
+                    placeholder="Wpisz opis"
+                  />
+                  {errors.description && touched.description ? (
+                    <div className="text-danger">{errors.description}</div>
+                  ) : null}
+                </div>
 
-              <button className="btn btn-lg btn-dark btn-block" type="submit">Edytuj</button>
+                <div className="card-footer">
+                  <button
+                    className="btn btn-lg btn-outline-dark btn-block"
+                    type="submit"
+                  >
+                    Edytuj
+                  </button>
+                </div>
+              </div>
             </Form>
           )}
-        </Formik></>);
+        </Formik>
+      </>
+    );
   }
 }
- 
+
 export default DishEdit;

@@ -4,7 +4,7 @@ import { handleResponse } from "../helpers/HandleResponse";
 import { authHeader } from "../helpers/AuthHelper";
 import RestaurantThumbnail from "../components/RestaurantThumbnail";
 import SearchForm from "../components/User/SearchForm";
-import Welcome from '../components/User/Welcome';
+import Welcome from '../components/Welcome';
 import OwnerWelcome from '../components/Owner/Welcome';
 import {Link} from 'react-router-dom';
 
@@ -31,7 +31,7 @@ class MainPage extends React.Component {
 
         if(response.length === 0){
           this.setState({ message : "Brak wyników" });
-        }else this.setState({ response, message : "" });
+        }else this.setState({ response, message : ""});
       })
       .catch(err => console.error(err));
      
@@ -58,7 +58,12 @@ class MainPage extends React.Component {
               value={this.state.value}
               handleSumbit={this.handleSumbit}
             />
-            {this.state.message ? <h4>{this.state.message}</h4> :<div className="p-3">{restaurants}</div>}
+            {this.state.message ? 
+            <div className=" not-found">
+              <div className='card'> 
+                <div className="card-body h3"> {this.state.message} </div>
+              </div>  </div>
+            :<div className="p-3">{restaurants}</div>}
         
           </> );
       }  else return (<OwnerWelcome />)

@@ -66,22 +66,30 @@ class DishCreate extends React.Component {
         >
           {({ errors, touched }) => (
             <Form className="form-signin">
-              <h1 className="h3 mb-3 font-weight-normal">Dodaj nowe danie</h1>
+              <div className="card">
+                <div className="card-header"> 
+                    <h3 className="">Dodaj nowe danie</h3>
+                </div> 
 
-              <Field name="name" type="text" className="form-control" placeholder="Wpisz nazwę dania" />
-              {errors.name && touched.name ? <div className="text-danger">{errors.name}</div> : null}
+              <div className="card-body"> 
+                    <Field name="name" type="text" className="form-control" placeholder="Wpisz nazwę dania" />
+                  {errors.name && touched.name ? <div className="text-danger">{errors.name}</div> : null}
 
-              <Field name="cost" type="number" className="form-control" placeholder="Wpisz cenę" />
-              {errors.cost && touched.cost ? (
-                <div className="text-danger">{errors.cost}</div>
-              ) : null}
+                  <Field name="cost" type="number" className="form-control" placeholder="Wpisz cenę" />
+                  {errors.cost && touched.cost ? (
+                    <div className="text-danger">{errors.cost}</div>
+                  ) : null}
 
-               <Field name="description" type="text" className="form-control" placeholder="Wpisz opis" />
-              {errors.description && touched.description ? (
-                <div className="text-danger">{errors.description}</div>
-              ) : null}
+                  <Field name="description" type="text" className="form-control" placeholder="Wpisz opis" />
+                  {errors.description && touched.description ? (
+                    <div className="text-danger">{errors.description}</div>
+                  ) : null}
+              </div>
 
-              <button className="btn btn-lg btn-dark btn-block" type="submit">Dodaj</button>
+                <div className="card-footer">   <button className="btn btn-lg btn-outline-dark btn-block" type="submit">Dodaj</button></div>
+                </div>
+             
+
             </Form>
           )}
         </Formik></>);

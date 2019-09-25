@@ -77,8 +77,12 @@ class Register extends React.Component {
         >
           {({ errors, touched }) => (
             <Form className="form-signin">
-              <h1 className="h3 mb-3 font-weight-normal">Rejestracja</h1>
-
+              <div className="card">
+             
+              <div className="card-header">
+              <h3 className="mb-3">Rejestracja</h3>
+              </div>
+              <div className="card-body">
               <Field name="firstName" className="form-control" placeholder="Imię" />
               {errors.firstName && touched.firstName  ? <div className="text-danger">{errors.firstName}</div> : null}
 
@@ -101,8 +105,12 @@ class Register extends React.Component {
               {errors.password && touched.password ? (
                 <div className="text-danger">{errors.password}</div>
               ) : null}
+              </div>
+              <div className="card-footer text-center">
+              <button className="btn btn-lg btn-outline-dark" type="submit">Zarejestruj</button>
+              </div>
+              </div>
 
-              <button className="btn btn-lg btn-dark btn-block" type="submit">Zarejestruj</button>
             </Form>
           )}
         </Formik> </>)

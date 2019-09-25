@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../styles/MainPage.css';
 
 
 class ErrorPage extends React.Component {
@@ -13,8 +13,15 @@ class ErrorPage extends React.Component {
   }
   render () {
     return (<>
-    <h3 className="mt-4">Nie znaleziono żądanej strony strony.</h3>
-    <h3 className="mt-4">Za chwilę nastąpi przekierowanie do strony głównej ...</h3>
+    <div className="card welcome">
+      <div className="card-header">
+          <h3 className="">Nie znaleziono żądanej strony</h3>
+      </div>
+      <div className="card-body">
+          <h3 className="">Za chwilę nastąpi przekierowanie do strony głównej ...</h3>
+      </div>
+    </div>
+  
     </>);
   }
 }

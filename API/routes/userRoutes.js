@@ -1,7 +1,7 @@
 import { Router } from "express";
 export const router = Router();
 
-import {changePassword,edit,getRestaurants,login,register,remove, getMyOrders} 
+import {changePassword,edit,getRestaurants,login,register,remove, getMyOrders, getUser} 
 from '../controllers/userController';
 
 import {catchAsyncErrors} from '../middleware/errorMiddleware';
@@ -33,3 +33,8 @@ catchAsyncErrors(edit));
 router.put('/user/changePassword',
 isUserLogin,
 catchAsyncErrors(changePassword));
+
+router.post('/user/get',
+isUserLogin,
+catchAsyncErrors(ownerAuthorize),
+catchAsyncErrors(getUser));
