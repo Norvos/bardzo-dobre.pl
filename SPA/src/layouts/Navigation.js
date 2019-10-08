@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import {authenticationService} from '../services/authenticationService';
+import {authenticationService} from '../services/AuthenticationService';
 import '../styles/Navigation.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";

@@ -106,9 +106,9 @@ class DishEdit extends React.Component {
                   ) : null}
                 </div>
 
-                <div className="card-footer">
+                <div className="card-footer text-center">
                   <button
-                    className="btn btn-lg btn-outline-dark btn-block"
+                    className="btn btn-lg btn-outline-dark "
                     type="submit"
                   >
                     Edytuj

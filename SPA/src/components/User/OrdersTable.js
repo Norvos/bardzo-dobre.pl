@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Dishes from "../DishList";
-import '../../styles/OrdersTable.css'
 
 const dateOptions = {
   year: "2-digit",

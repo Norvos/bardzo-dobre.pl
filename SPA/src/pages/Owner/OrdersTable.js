@@ -11,6 +11,13 @@ class OwnerOrdersList extends React.Component {
     restaurants : []
    }
 
+
+   UNSAFE_componentWillReceiveProps = (nextProps)=> {
+    if (nextProps.location.key !== this.props.location.key) {
+        window.location.reload();
+    }
+};
+
    async componentDidMount()  {
 
       let restaurants = [];

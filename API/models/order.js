@@ -21,7 +21,7 @@ export async function create(req) {
 
   const restaurant = await Restaurant.findById(req.body.restaurantID);
   if(!restaurant.open) throw new Error("Restaurant is closed right now");
-  if(restaurant.permamentlyClosed)  throw new Error("Restaurant is permamently closed");
+  if(restaurant.permamentlyClosed) throw new Error("Restaurant is permamently closed");
 
   await new Order({
     userID: req.decoded.id,

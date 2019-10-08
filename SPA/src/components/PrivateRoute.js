@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-import { authenticationService } from '../services/authenticationService';
+import { authenticationService } from '../services/AuthenticationService';
 
 export const UserRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => {

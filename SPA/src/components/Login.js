@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { authenticationService } from "../services/authenticationService";
+import { authenticationService } from "../services/AuthenticationService";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
@@ -18,6 +18,12 @@ class Login extends React.Component {
   state = {
     complete: false
   };
+
+  UNSAFE_componentWillReceiveProps = (nextProps)=> {
+    if (nextProps.location.key !== this.props.location.key) {
+        window.location.reload();
+    }
+};
 
   handleSumbit = (email, password) => {
     authenticationService.login(email, password);

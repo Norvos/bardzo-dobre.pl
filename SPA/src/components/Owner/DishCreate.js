@@ -86,7 +86,8 @@ class DishCreate extends React.Component {
                   ) : null}
               </div>
 
-                <div className="card-footer">   <button className="btn btn-lg btn-outline-dark btn-block" type="submit">Dodaj</button></div>
+                <div className="card-footer text-center">   
+                <button className="btn btn-lg btn-outline-dark" type="submit">Dodaj</button></div>
                 </div>
              
 

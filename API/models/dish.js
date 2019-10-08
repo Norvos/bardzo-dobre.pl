@@ -12,11 +12,6 @@ export const DishSchema = new Schema({
     quantity : {type: Number}
 },{versionKey: false});
 
-// DishSchema.methods.toJSON = function() {
-//   var obj = this.toObject();
-//   delete obj.available;
-//   return obj;
-//  };
 
 export const Dish = mongoose.model('Dish', DishSchema);
 
@@ -72,7 +67,6 @@ export async function edit(req)
   const dish = await Dish.findById(req.body._id);
 
   if (!dish) throw new Error("Cannot find the dish");
-  //if (!dish.available) throw new Error("Cannot edit the unavailable dish");
 
   const restaurant = await Restaurant.findById(req.body.restaurantID);
   if(!restaurant) throw new Error("Cannot find the restaurant");
@@ -85,6 +79,7 @@ export async function edit(req)
 }
 
 export async function getAll(req){
+  
   if(!req.body.restaurantID) throw new Error(`Cannot find restaurant's id`);
   const restaurant = await Restaurant.findById(req.body.restaurantID);
   if(!restaurant) throw new Error("Cannot find the restaurant");

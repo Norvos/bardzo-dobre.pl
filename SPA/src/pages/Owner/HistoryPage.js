@@ -15,6 +15,12 @@ class HistoryPage extends React.Component {
    date : null
   }
 
+  UNSAFE_componentWillReceiveProps = (nextProps)=> {
+    if (nextProps.location.key !== this.props.location.key) {
+        window.location.reload();
+    }
+};
+
   componentDidMount() {
     const auth = authHeader();
     const requestOptions = {

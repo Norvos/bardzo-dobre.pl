@@ -9,6 +9,13 @@ class OrdersPage extends React.Component {
     orders: null
   };
 
+  UNSAFE_componentWillReceiveProps = (nextProps)=> {
+    if (nextProps.location.key !== this.props.location.key) {
+        window.location.reload();
+    }
+};
+
+
   async componentDidMount() {
     const auth = authHeader();
     let requestOptions = {

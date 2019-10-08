@@ -21,6 +21,12 @@ const RegisterSchema = Yup.object().shape({
 });
 
 class Register extends React.Component {
+
+  UNSAFE_componentWillReceiveProps = (nextProps)=> {
+    if (nextProps.location.key !== this.props.location.key) {
+        window.location.reload();
+    }
+};
   state = {
     complete: false
   }

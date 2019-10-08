@@ -25,7 +25,6 @@ const CartProductsList = props => {
       </td>
     </tr>
   ));
-
   return (
     <>
       <table className="table table-bordered cart-list table-striped mt-3 table-light">

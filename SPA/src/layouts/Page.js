@@ -38,7 +38,7 @@ const Page = props => {
     <OwnerRoute path='/restaurants' exact component={RestaurantsList}/>
     <OwnerRoute path='/restaurants/:id' exact component={OwnerRestaurantPage}/>
     <OwnerRoute path='/ownerorders' exact component={OrdersTable}/>
-    <OwnerRoute path='/history' exact component={HistoryPage}/>
+    <OwnerRoute path='/history' exact component={HistoryPage}  key={Math.random()}/>
     <Route component={ErrorPage} />
   </Switch> 
  );

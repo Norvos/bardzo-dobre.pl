@@ -3,7 +3,6 @@ require("dotenv").config({path : '.env'});
 
 import express from 'express';
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 
 import {router as UserRoutes} from './routes/userRoutes';
@@ -38,10 +37,9 @@ mongoose.set('useCreateIndex', true);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+
 
 app.use(UserRoutes);
-
 app.use(isUserLogin);
 
 app.use(RestaurantRoutes);

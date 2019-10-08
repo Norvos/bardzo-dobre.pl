@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter} from "react-router-dom";
 import Navigation from "./Navigation";
 import Page from "./Page";
-import { authenticationService } from '../services/authenticationService';
+import { authenticationService } from '../services/AuthenticationService';
 
 
 class App extends React.Component {

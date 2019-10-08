@@ -14,6 +14,12 @@ class MainPage extends React.Component {
     message: ""
   };
 
+  UNSAFE_componentWillReceiveProps = (nextProps)=> {
+    if (nextProps.location.key !== this.props.location.key) {
+        window.location.reload();
+    }
+};
+
   handleSumbit = searchValue => {
     const auth = authHeader();
     const requestOptions = {

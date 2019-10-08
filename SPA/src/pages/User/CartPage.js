@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {removeItem,addQuantity,subtractQuantity,emptyTheCart} from "../../actions/CartActions";
+import {removeItem,addQuantity,subtractQuantity,emptyCart,saveCart} from "../../actions/CartActions";
 import "../../styles/CartList.css";
 import { handleResponse } from "../../helpers/HandleResponse";
 import { authHeader } from "../../helpers/AuthHelper";
@@ -9,6 +9,13 @@ import alertify from 'alertifyjs';
 import '../../styles/OrdersList.css';
 
 class Cart extends Component {
+
+  UNSAFE_componentWillReceiveProps = (nextProps)=> {
+    if (nextProps.location.key !== this.props.location.key) {
+        window.location.reload();
+    }
+};
+
   handleRemove = item => {
     this.props.removeItem(item);
   };
@@ -22,9 +29,12 @@ class Cart extends Component {
   };
 
   handleCartEmptying = () => {
-    this.props.emptyTheCart();
+    this.props.emptyCart();
   };
 
+componentDidUpdate() {
+  this.props.saveCart();
+}
   handleClick = () => {
     const auth = authHeader();
     const requestOptions = {
@@ -95,8 +105,11 @@ const mapDispatchToProps = dispatch => {
     subtractQuantity: id => {
       dispatch(subtractQuantity(id));
     },
-    emptyTheCart: () => {
-      dispatch(emptyTheCart());
+    emptyCart: () => {
+      dispatch(emptyCart());
+    },
+    saveCart: () => {
+      dispatch(saveCart())
     }
   };
 };

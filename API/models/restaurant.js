@@ -33,7 +33,7 @@ export async function create(req){
     name : req.body.name,
     address : req.body.address,
     description : req.body.description,
-    ownerID: req.session.user_sid
+    ownerID: req.decoded.id
   }).save();
 }
 
@@ -41,7 +41,7 @@ export async function remove(req){
 
   const restaurant = await Restaurant.findById(req.body._id);
   if(!restaurant) throw new Error("Cannot find the restaurant");
-  if(restaurant.open) throw new Error("Cannot remove open restaurant");
+  if(restaurant.open) throw new Error("Cannot remove opened restaurant");
 
   const orders = await Order.find({restaurantID : restaurant._id});
   orders.forEach(order => {
@@ -80,7 +80,7 @@ export async function open(req)
   if(restaurant.open) throw new Error("Restaurant is already open");
   if(restaurant.permamentlyClosed) throw new Error("Restaurant is permamently closed");
 
-  restaurant.open = "true";
+  restaurant.open = true;
   await restaurant.save();
 }
 
@@ -94,13 +94,11 @@ export async function close(req)
   const orders = await Order.find({restaurantID : restaurant._id, 
   orderedAt : new Date().toLocaleDateString()});
 
-  console.log(orders);
-
   orders.forEach(order => {
     if(order.state !== "Finalised")
     throw new Error("You cannot close the restaurant with orders in progress");
   });
 
-  restaurant.open = "false";
+  restaurant.open = false;
   await restaurant.save();
 }

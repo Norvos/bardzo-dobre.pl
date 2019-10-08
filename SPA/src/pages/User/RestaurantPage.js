@@ -2,9 +2,8 @@ import React from "react";
 import { handleResponse } from "../../helpers/HandleResponse";
 import { authHeader } from "../../helpers/AuthHelper";
 import ProductList from "../../components/User/ProductsList";
-import { addToCart } from "../../actions/CartActions";
+import { addToCart,saveCart } from "../../actions/CartActions";
 import { connect } from "react-redux";
-import "../../styles/RestaurantPage.css";
 import RestaurantInfo from '../../components/RestaurantInfo';
 import Spinner from '../../components/Spinner';
 
@@ -17,6 +16,7 @@ class RestaurantPage extends React.Component {
 
   handleClick = item => {
     this.props.addToCart(item);
+    this.props.saveCart();
   };
 
   componentDidMount() {
@@ -81,6 +81,9 @@ const mapDispatchToProps = dispatch => {
   return {
     addToCart: item => {
       dispatch(addToCart(item));
+    },
+    saveCart : () => {
+      dispatch(saveCart())
     }
   };
 };
